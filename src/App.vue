@@ -1,5 +1,5 @@
 <template>
-  <img alt="Vue logo" src="ui/assets/logo.png">
+  <img alt="Meteorman logo" src="assets/Meteorman.png">
   <HelloWorld msg="Welcome to Meteorman App"/>
 </template>
 
