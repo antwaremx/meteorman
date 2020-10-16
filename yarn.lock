@@ -3563,6 +3563,11 @@ ejs@~2.5.6:
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.5.9.tgz#7ba254582a560d267437109a68354112475b0ce5"
   integrity sha512-GJCAeDBKfREgkBtgrYSf9hQy9kTb3helv0zGdzqhM7iAkW8FA/ZF97VQDbwFiwIT8MQLLOe5VlPZOEvZAqtUAQ==
 
+ejson@^2.1.2, ejson@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/ejson/-/ejson-2.2.0.tgz#16c177cb2c064f2be8876d4a2f7f09ab704f560d"
+  integrity sha512-kWa0AKAxDhmr4t6c4pgQqk6yL52/M67xOMh60HRnAeydzo5QIxOitN5bE1+e0rbdnxfly7FTB9e2Ny0ypLMbag==
+
 electron-builder@^20.19.2:
   version "20.44.4"
   resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-20.44.4.tgz#c47981ddf486d582c0ae0f4d530c831010aacad7"
@@ -5922,6 +5927,11 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
+
+isomorphic-ws@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/isomorphic-ws/-/isomorphic-ws-4.0.1.tgz#55fd4cd6c5e6491e76dc125938dd863f5cd4f2dc"
+  integrity sha512-BhBvN2MBpWTaSHdWRb/bwdZJ1WaehQ2L1KngkCkfLUGF0mAWAT1sQUQacEmQ0jXkFw/czDXPNQSL5u2/Krsz1w==
 
 isstream@~0.1.2:
   version "0.1.2"
@@ -9197,6 +9207,23 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha512-VUJ49FC8U1OxwZLxIbTTrDvLnf/6TDgxZcK8wxR8zs13xpx7xbG60ndBlhNrFi2EMuFRoeDoJO7wthSLq42EjA==
 
+simpleddp-core@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/simpleddp-core/-/simpleddp-core-1.0.6.tgz#ec3c5aca25edff6854cd900e39c742dbaa10491e"
+  integrity sha512-ImVD26ufpGN8n4awbvgTGlcRuJOn3q+eMdaSZWqnwQGcECLsthmizjVprfBSvRixl/cXWaQn5CoBXn9KNInjEQ==
+  dependencies:
+    ejson "^2.1.2"
+    wolfy87-eventemitter "^5.2.5"
+
+simpleddp@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/simpleddp/-/simpleddp-2.2.4.tgz#036f8fd54d09974d9b91304a0981e80b799ac592"
+  integrity sha512-VnsORlr1TPOqHyHjJXPoh5UYM6A30WAZVzxvxzCa3ShlxDjQfIO0dtmHKnr6eE5UnMffzcYnLaLXmp352zBsEg==
+  dependencies:
+    clone-deep "^4.0.1"
+    ejson "^2.2.0"
+    simpleddp-core "^1.0.6"
+
 single-line-log@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/single-line-log/-/single-line-log-1.1.2.tgz#c2f83f273a3e1a16edb0995661da0ed5ef033364"
@@ -10803,6 +10830,11 @@ with-callback@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/with-callback/-/with-callback-1.0.2.tgz#a09629b9a920028d721404fb435bdcff5c91bc21"
   integrity sha1-oJYpuakgAo1yFAT7Q1vc/1yRvCE=
+
+wolfy87-eventemitter@^5.2.5:
+  version "5.2.9"
+  resolved "https://registry.yarnpkg.com/wolfy87-eventemitter/-/wolfy87-eventemitter-5.2.9.tgz#e879f770b30fbb6512a8afbb330c388591099c2a"
+  integrity sha512-P+6vtWyuDw+MB01X7UeF8TaHBvbCovf4HPEMF/SV7BdDc1SMTiBy13SRD71lQh4ExFTG1d/WNzDGDCyOKSMblw==
 
 word-wrap@~1.2.3:
   version "1.2.3"

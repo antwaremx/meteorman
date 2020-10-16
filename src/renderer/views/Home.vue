@@ -29,11 +29,24 @@
 </template>
 
 <script>
+  import simpleDDP from 'simpleddp'; // ES6
+  import ws from 'isomorphic-ws';
   export default {
     name: 'home',
     methods: {
-      ddp(){
+      async ddp(){
         console.log("Click");
+
+        let opts = {
+          endpoint: "ws://admin.movin.mx/websocket",
+          SocketConstructor: ws,
+          reconnectInterval: 5000
+        };
+        const server = new simpleDDP(opts);
+
+        const res = await server.call('binnacle.makeBackup');
+
+        console.log(res);
       }
     }
   }
