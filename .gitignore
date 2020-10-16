@@ -5,8 +5,6 @@ build/*
 !build/icons
 coverage
 node_modules/
-.idea/
-.idea/workspace.xml
 npm-debug.log
 npm-debug.log.*
 thumbs.db
