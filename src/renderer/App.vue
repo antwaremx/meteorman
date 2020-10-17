@@ -3,12 +3,17 @@
     <transition :name="$router.currentRoute.name">
       <router-view></router-view>
     </transition>
+    <alert-message></alert-message>
+    <loader></loader>
   </v-app>
 </template>
 
 <script>
+  import AlertMessage from './components/Utilities/Alerts/AlertMessage';
+  import Loader from './components/Utilities/Loaders/Loader';
   export default {
-    name: 'meteorman'
+    name: 'meteorman',
+    components: { Loader, AlertMessage }
   }
 </script>
 

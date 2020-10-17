@@ -9209,6 +9209,11 @@ simpleddp-core@^1.0.6:
     ejson "^2.1.2"
     wolfy87-eventemitter "^5.2.5"
 
+simpleddp-plugin-login@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/simpleddp-plugin-login/-/simpleddp-plugin-login-4.0.2.tgz#609bb9f721fc05da5d7818790ab9ac98bc909c57"
+  integrity sha512-rWZ6aoDq9znZnUmnOaIlewU4eawLGoAIlWPGenwmlIKdc1qIhkHfg7MfjwmhGA5WQLNTnXelVjPgm9cuzG1neA==
+
 simpleddp@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/simpleddp/-/simpleddp-2.2.4.tgz#036f8fd54d09974d9b91304a0981e80b799ac592"
@@ -10886,6 +10891,11 @@ ws@^6.2.1:
   integrity sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==
   dependencies:
     async-limiter "~1.0.0"
+
+ws@^7.3.1:
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.3.1.tgz#d0547bf67f7ce4f12a72dfe31262c68d7dc551c8"
+  integrity sha512-D3RuNkynyHmEJIpD2qrgVkc9DQ23OrN/moAwZX4L8DfvszsJxpjQuUq3LMx6HoYji9fbIOBY18XWBsAux1ZZUA==
 
 ws@~3.3.1:
   version "3.3.3"

@@ -57,12 +57,14 @@
     "axios": "^0.18.0",
     "isomorphic-ws": "^4.0.1",
     "simpleddp": "^2.2.4",
+    "simpleddp-plugin-login": "^4.0.2",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",
     "vuetify": "^2.3.14",
     "vuex": "^3.0.1",
-    "vuex-electron": "^1.0.0"
+    "vuex-electron": "^1.0.0",
+    "ws": "^7.3.1"
   },
   "devDependencies": {
     "ajv": "^6.5.0",
