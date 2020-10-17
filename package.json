@@ -58,6 +58,7 @@
     "isomorphic-ws": "^4.0.1",
     "simpleddp": "^2.2.4",
     "simpleddp-plugin-login": "^4.0.2",
+    "vee-validate": "^3.4.2",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1",
