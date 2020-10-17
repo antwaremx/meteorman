@@ -20,8 +20,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48721699-874e-4471-8d4e-ff39c02b9606" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/renderer/assets/logobn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/assets/meteorman_logo2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/components/AppBar/AppBar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/components/MeteorMan/MeteorMan.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.electron-vue/webpack.renderer.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/.electron-vue/webpack.renderer.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/plugins/vuetify.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/plugins/vuetify.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/views/Home.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
@@ -41,16 +50,23 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/renderer/plugins" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/renderer/assets" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/renderer/assets" />
+      <recent name="$PROJECT_DIR$/src/renderer/plugins" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/renderer/assets" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/renderer/plugins" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -61,7 +77,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1602814210032</updated>
-      <workItem from="1602814211104" duration="1438000" />
+      <workItem from="1602814211104" duration="2148000" />
+      <workItem from="1602874263498" duration="1017000" />
+      <workItem from="1602875380277" duration="12050000" />
     </task>
     <servers />
   </component>
@@ -78,5 +96,12 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="625" y="242" width="670" height="676" key="search.everywhere.popup" timestamp="1602894286111">
+      <screen x="0" y="23" width="1920" height="992" />
+    </state>
+    <state x="625" y="242" width="670" height="676" key="search.everywhere.popup/1920.92.1600.877/-1366.149.1366.745/0.23.1920.992@0.23.1920.992" timestamp="1602894286111" />
   </component>
 </project>

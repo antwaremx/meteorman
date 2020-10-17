@@ -1,7 +1,9 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-  </div>
+  <v-app id="app">
+    <transition :name="$router.currentRoute.name">
+      <router-view></router-view>
+    </transition>
+  </v-app>
 </template>
 
 <script>

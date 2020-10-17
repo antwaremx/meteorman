@@ -1,137 +1,86 @@
 <template>
-  <div id="wrapper">
-    <img id="logo" src="../assets/meteorman_logo.png" alt="electron-vue">
-    <main>
-      <div class="left-side">
-        <span class="title">
-          Methods
-        </span>
-        <v-text-field>
-          <v-btn
-              slot="prepend"
-              depressed
-              outlined
-          >
-            DDP
-          </v-btn>
-          <v-btn
-              slot="append"
-              depressed
-              outlined
-              v-on:click="ddp()"
-          >
-            SEND
-          </v-btn>
-        </v-text-field>
-      </div>
-    </main>
+  <div class="wrapper">
+    <app-bar/>
+    <v-card>
+      <v-tabs
+          v-model="tab"
+          center-active
+          next-icon="mdi-arrow-right-bold-box-outline"
+          prev-icon="mdi-arrow-left-bold-box-outline"
+          show-arrows
+      >
+        <v-tab
+            v-for="n in length"
+            :key="n"
+        >
+          DDP {{ n }}
+        </v-tab>
+        <v-menu bottom left>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+                icon
+                class="align-self-center mr-4"
+                v-bind="attrs"
+                v-on="on"
+                @click="length++"
+            >
+              <v-icon>
+                mdi-plus
+              </v-icon>
+            </v-btn>
+          </template>
+        </v-menu>
+      </v-tabs>
+
+      <v-tabs-items v-model="tab">
+        <v-tab-item v-for="n in length" :key="n">
+          <meteor-man />
+        </v-tab-item>
+      </v-tabs-items>
+
+    </v-card>
   </div>
 </template>
 
 <script>
-  import simpleDDP from 'simpleddp'; // ES6
-  import ws from 'isomorphic-ws';
-  export default {
-    name: 'home',
-    methods: {
-      async ddp(){
-        console.log("Click");
+import AppBar from '../components/AppBar/AppBar';
+import MeteorMan from '../components/MeteorMan/MeteorMan';
 
-        let opts = {
-          endpoint: "ws://admin.movin.mx/websocket",
-          SocketConstructor: ws,
-          reconnectInterval: 5000
-        };
-        const server = new simpleDDP(opts);
-
-        const res = await server.call('binnacle.makeBackup');
-
-        console.log(res);
-      }
+export default {
+  name: 'home',
+  components: { MeteorMan, AppBar },
+  data() {
+    return {
+      length: 1,
+      tab: 0,
+    };
+  },
+  watch: {
+    length(val) {
+      this.tab = val - 1;
     }
+  },
+  methods: {
   }
+};
 </script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  body { font-family: 'Source Sans Pro', sans-serif; }
+::-webkit-scrollbar {
+  display: none;
+}
 
-  #wrapper {
-    background:
-      radial-gradient(
-        ellipse at top left,
-        rgba(255, 255, 255, 1) 40%,
-        rgba(229, 229, 229, .9) 100%
-      );
-    height: 100vh;
-    padding: 60px 80px;
-    width: 100vw;
-  }
+.wrapper {
+  background-color: aliceblue;
+  height: 100vh;
+  width: 100vw;
+}
 
-  #logo {
-    height: auto;
-    margin-bottom: 20px;
-    width: 420px;
-  }
-
-  main {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  main > div { flex-basis: 50%; }
-
-  .left-side {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .welcome {
-    color: #555;
-    font-size: 23px;
-    margin-bottom: 10px;
-  }
-
-  .title {
-    color: #2c3e50;
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 6px;
-  }
-
-  .title.alt {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-
-  .doc p {
-    color: black;
-    margin-bottom: 10px;
-  }
-
-  .doc button {
-    font-size: .8em;
-    cursor: pointer;
-    outline: none;
-    padding: 0.75em 2em;
-    border-radius: 2em;
-    display: inline-block;
-    color: #fff;
-    background-color: #4fc08d;
-    transition: all 0.15s ease;
-    box-sizing: border-box;
-    border: 1px solid #4fc08d;
-  }
-
-  .doc button.alt {
-    color: #42b983;
-    background-color: transparent;
-  }
 </style>
