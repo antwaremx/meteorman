@@ -1,8 +1,8 @@
 {
-  "name": "meteorman",
+  "name": "Meteorman",
   "version": "0.0.1",
   "author": "Antware",
-  "description": "An electron-vue project",
+  "description": "A DDP client with GUI",
   "license": null,
   "main": "./dist/electron/main.js",
   "scripts": {
@@ -20,8 +20,8 @@
     "postinstall": ""
   },
   "build": {
-    "productName": "meteorman",
-    "appId": "com.example.yourapp",
+    "productName": "Meteorman",
+    "appId": "com.antware.meteorman",
     "directories": {
       "output": "build"
     },

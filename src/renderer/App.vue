@@ -12,7 +12,7 @@
   import AlertMessage from './components/Utilities/Alerts/AlertMessage';
   import Loader from './components/Utilities/Loaders/Loader';
   export default {
-    name: 'meteorman',
+    name: 'App',
     components: { Loader, AlertMessage }
   }
 </script>
