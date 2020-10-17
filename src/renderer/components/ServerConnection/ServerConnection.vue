@@ -194,7 +194,7 @@ export default {
         reconnectInterval: this.serverConnection.reconnectInterval,
         maxTimeout: this.serverConnection.maxTimeout,
         autoConnect: false,
-        autoReconnect: true
+        autoReconnect: true //TODO: Agregar al UI (va ligado con el de reconnectInterval)
       };
       this.Meteor = new SimpleDDP(opts, [simpleDDPLogin]);
       this.Meteor.connect();

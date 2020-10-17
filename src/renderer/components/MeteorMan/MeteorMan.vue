@@ -3,11 +3,16 @@
     <server-connection ref="serverRef" @onUpdateConnection="updateConnection"></server-connection>
     <div v-if="connected">
       <v-row>
-        <v-col cols="2">
+        <v-col cols="3">
           <v-select :items="dppTypes" v-model="typeSelected" dense outlined/>
         </v-col>
-        <v-col cols="8">
-          <v-text-field placeholder="method name" v-model="meteorMethod.name" dense outlined clearable type="text"/>
+        <v-col cols="7">
+          <v-text-field v-if="typeSelected==='Method'" placeholder="method name"
+                        v-model="meteorMethod.name" dense outlined clearable type="text"/>
+          <v-text-field v-else placeholder="publication name"
+                        v-model="publication.name" dense outlined clearable type="text"/>
+          <v-text-field v-if="typeSelected==='Subscription'" placeholder="collection name"
+                        v-model="publication.collectionName" dense outlined clearable type="text"/>
         </v-col>
         <v-col cols="2">
           <v-btn v-on:click="ddp()" color="error" elevation="0">
@@ -25,12 +30,16 @@
       </v-row>
       <v-row>
         <v-col cols="12">
-          <v-textarea
-              v-model="responseMethod"
-              outlined
-              label="Reponse"
-              rows="10"
-          ></v-textarea>
+          <v-textarea v-if="typeSelected==='Method'"
+                      v-model="methodResponse"
+                      outlined
+                      label="Method Response"
+                      rows="10"></v-textarea>
+          <v-textarea v-else
+                      v-model="subscriptionResponse"
+                      outlined
+                      label="Publication Response"
+                      rows="10"></v-textarea>
         </v-col>
       </v-row>
     </div>
@@ -55,7 +64,13 @@ export default {
         name: null,
         args: null
       },
-      responseMethod: '',
+      publication: {
+        name: null,
+        collectionName: null
+      },
+      methodResponse: '',
+      subscriptionResponse: '',
+      isSubscriptionInProgress: null,
       connected: false
     };
   },
@@ -65,15 +80,29 @@ export default {
     },
     async callMethod(args) {
       try {
-        const res = await this.$refs.serverRef.Meteor.call(this.meteorMethod.name,...args);
-        this.responseMethod = JSON.stringify(res, undefined, 4);
+        const res = await this.$refs.serverRef.Meteor.call(this.meteorMethod.name, ...args);
+        this.methodResponse = JSON.stringify(res, undefined, 4);
       } catch (exception) {
         console.error('meteor method error:', exception);
-        this.responseMethod = JSON.stringify(exception, undefined, 4);
+        this.methodResponse = JSON.stringify(exception, undefined, 4);
       }
     },
-    subscribeToPublication(args) {
-      console.log('subscribeToPublication pressed');
+    async subscribeToPublication(args) {
+      try {
+        if (this.isSubscriptionInProgress) {
+          await this.isSubscriptionInProgress.stop();
+        }
+        this.isSubscriptionInProgress = this.$refs.serverRef.Meteor.subscribe(this.publication.name, ...args);
+        await this.isSubscriptionInProgress.ready();
+        const firstResponse = this.$refs.serverRef.Meteor.collection(this.publication.collectionName).filter(e => e).fetch();
+        this.subscriptionResponse = JSON.stringify(firstResponse, undefined, 4);
+        this.$refs.serverRef.Meteor.collection(this.publication.collectionName).filter(e => e).onChange(({ prev, next }) => {
+          this.subscriptionResponse = JSON.stringify(next, undefined, 4);
+        });
+      } catch (exception) {
+        console.error('subscription error: ', exception);
+        this.subscriptionResponse = JSON.stringify(exception, undefined, 4);
+      }
     },
     loadArguments(args) {
       let finalArgs = [];
