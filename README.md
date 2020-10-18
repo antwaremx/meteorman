@@ -15,11 +15,10 @@ A DDP Client with GUI
 [![forthebadge](http://forthebadge.com/images/badges/uses-js.svg)](http://forthebadge.com) 
 [![forthebadge](https://forthebadge.com/images/badges/made-with-vue.svg)](http://forthebadge.com)
 [![forthebadge](http://forthebadge.com/images/badges/makes-people-smile.svg)](http://forthebadge.com)
-</div>
-
-<div align="center">
   
 *Read this in other languages: [Spanish](README.es.md)
+
+</div>
 
 ## Starting 🚀
 
