@@ -16,7 +16,7 @@ Cliente DDP con interfaz gráfica de usuario.
 [![forthebadge](https://forthebadge.com/images/badges/made-with-vue.svg)](http://forthebadge.com)
 [![forthebadge](http://forthebadge.com/images/badges/makes-people-smile.svg)](http://forthebadge.com)
   
-*Read this in other languages: [Spanish](README.es.md)
+*Read this in other languages: [English](README.md)
 
 </div>
 
