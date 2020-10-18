@@ -45,7 +45,7 @@ Meteorman is The Postman of Meteor. Is a DDP Client with GUI
 - NodeJs [Download here](https://nodejs.org/es/) 
 - Yarn [Download here](https://yarnpkg.com/getting-started/install)
 
-### Instalación 🔧
+### Instalation 🔧
 
 [git](https://git-scm.com/) is required to run the following console commands:
 ```sh
@@ -70,4 +70,9 @@ $ yarn test
 
 ---
 
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[45a3e22](https://github.com/SimulatedGREG/electron-vue/tree/45a3e224e7bb8fc71909021ccfdcfec0f461f634) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
+<div align="center">
+<br>
+<img width="250" src="/src/renderer/assets/Powered%20light%202.png" alt="powered">
+<br>
+<br>
+</div>
