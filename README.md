@@ -6,38 +6,63 @@
 </div>
 
 <p align="center" color="#6a737d">
-A DDP Client With GUI (The Postman of Meteor)
+A DDP Client with GUI
 </p>
 
 <div align="center">
 
 [![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com) 
 [![forthebadge](http://forthebadge.com/images/badges/uses-js.svg)](http://forthebadge.com) 
-[![forthebadge](http://forthebadge.com/images/badges/makes-people-smile.svg)](http://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/made-with-vue.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/makes-people-smile.svg)](http://forthebadge.com)
 </div>
 
-
 <div align="center">
+  
+*Read this in other languages: [Spanish](README.es.md)
 
+## Starting 🚀
 
-> An electron-vue project
+Meteorman is The Postman of Meteor. Is a DDP Client with GUI
 
-#### Build Setup
+### Supported Platforms 💻
+
+- macOS 🍎 ✅
+- Linux 🐧 ✅
+- Windows ✅
+
+## For Developers 🚀
+
+### System Requirements 📋
+
+- NodeJs [Download here](https://nodejs.org/es/) 
+- Yarn [Download here](https://yarnpkg.com/getting-started/install)
+
+```
+You must have npm  / yarn and nodejs installed.
+```
+
+### Instalación 🔧
+
+[git](https://git-scm.com/) is required to run the following console commands:
+```sh
+$ git clone https://github.com/antwaremx/meteorman
+```
+
+### Build Setup📦
 
 ``` bash
 # install dependencies
-npm install
+yarn install / yarn
 
 # serve with hot reload at localhost:9080
-npm run dev
+yarn run dev
 
 # build electron application for production
-npm run build
+yarn run build
 
 # run unit & end-to-end tests
-npm test
-
+yarn test
 
 ```
 
