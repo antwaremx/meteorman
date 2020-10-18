@@ -8,7 +8,13 @@
         </v-col>
         <v-col cols="7">
           <v-text-field v-if="typeSelected==='Method'" placeholder="method name"
-                        v-model="meteorMethod.name" dense outlined clearable type="text"/>
+                        v-model="meteorMethod.name" dense outlined type="text">
+            <template v-slot:append>
+              <v-btn icon @click="meteorMethod.name = ''" tabindex="-1" class="pb-5">
+                <v-icon v-if="meteorMethod.name">mdi-close</v-icon>
+              </v-btn>
+            </template>
+          </v-text-field>
           <v-text-field v-else placeholder="publication name"
                         v-model="publication.name" dense outlined clearable type="text"/>
           <v-text-field v-if="typeSelected==='Subscription'" placeholder="collection name"
@@ -43,16 +49,18 @@
         </v-col>
       </v-row>
     </div>
+    <method-response ref="methodResponseRef"></method-response>
   </v-container>
 </template>
 
 <script>
 import ServerConnection from '../ServerConnection/ServerConnection';
 import Arguments from './Arguments';
+import MethodResponse from './MethodResponse';
 
 export default {
   name: 'MeteorMan',
-  components: { Arguments, ServerConnection },
+  components: { MethodResponse, Arguments, ServerConnection },
   data() {
     return {
       dppTypes: [
@@ -71,7 +79,8 @@ export default {
       methodResponse: '',
       subscriptionResponse: '',
       isSubscriptionInProgress: null,
-      connected: false
+      connected: false,
+      methodResponseParsed: ''
     };
   },
   methods: {
@@ -80,10 +89,13 @@ export default {
     },
     async callMethod(args) {
       try {
-        const res = await this.$refs.serverRef.Meteor.call(this.meteorMethod.name, ...args);
-        this.methodResponse = JSON.stringify(res, undefined, 4);
+        this.methodResponseParsed = await this.$refs.serverRef.Meteor.call(this.meteorMethod.name, ...args);
+        this.$refs.methodResponseRef.loadResponse(this.methodResponseParsed);
+        this.methodResponse = JSON.stringify(this.methodResponseParsed, undefined, 4);
       } catch (exception) {
         console.error('meteor method error:', exception);
+        this.methodResponseParsed = exception;
+        this.$refs.methodResponseRef.loadResponse(this.methodResponseParsed);
         this.methodResponse = JSON.stringify(exception, undefined, 4);
       }
     },
@@ -137,6 +149,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+.tree-view-item-key {
+  color: #9e3731;
+  font-weight: normal;
+}
 
+.tree-view-item-value-string, .tree-view-item-value-boolean {
+  color: #2251a0;
+}
+.tree-view-item-value-number {
+  color: #3c845c;
+}
 </style>

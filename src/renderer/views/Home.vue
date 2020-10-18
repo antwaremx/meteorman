@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" @dragover="onDragOver($event)">
     <app-bar/>
     <v-card>
       <v-tabs
@@ -34,7 +34,7 @@
 
       <v-tabs-items v-model="tab">
         <v-tab-item v-for="n in length" :key="n">
-          <meteor-man />
+          <meteor-man/>
         </v-tab-item>
       </v-tabs-items>
 
@@ -45,6 +45,8 @@
 <script>
 import AppBar from '../components/AppBar/AppBar';
 import MeteorMan from '../components/MeteorMan/MeteorMan';
+import { createNamespacedHelpers } from 'vuex';
+const { mapActions, mapState } = createNamespacedHelpers('dragAndDrop');
 
 export default {
   name: 'home',
@@ -52,7 +54,7 @@ export default {
   data() {
     return {
       length: 1,
-      tab: 0,
+      tab: 0
     };
   },
   watch: {
@@ -60,7 +62,20 @@ export default {
       this.tab = val - 1;
     }
   },
+  computed: {
+    ...mapState(['responses'])
+  },
   methods: {
+    ...mapActions(['setResponseHeight']),
+    onDragOver(event) {
+      const height = window.innerHeight - event.y;
+      if (this.responses['main'] !== height) {
+        this.setResponseHeight({
+          key: 'main', // TODO: Replace this by active tab
+          height
+        })
+      }
+    }
   }
 };
 </script>

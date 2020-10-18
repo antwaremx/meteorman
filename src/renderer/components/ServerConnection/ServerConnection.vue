@@ -52,10 +52,22 @@
         />
       </v-col>
       <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4">
-        <v-text-field v-model="authentication.userOrEmail" label="User/Email" outlined clearable :disabled="Meteor.connected"/>
+        <v-text-field v-model="authentication.userOrEmail" label="User/Email" outlined :disabled="Meteor.connected">
+          <template v-slot:append>
+            <v-btn icon @click="authentication.userOrEmail = ''" tabindex="-1" class="pb-5">
+              <v-icon v-if="authentication.userOrEmail">mdi-close</v-icon>
+            </v-btn>
+          </template>
+        </v-text-field>
       </v-col>
       <v-col cols="12" xs="12" sm="3" md="3" lg="3" xl="3">
-        <v-text-field v-model="authentication.password" label="Password" outlined clearable :disabled="Meteor.connected"/>
+        <v-text-field v-model="authentication.password" label="Password" outlined :disabled="Meteor.connected">
+          <template v-slot:append>
+            <v-btn icon @click="authentication.password = ''" tabindex="-1" class="pb-5">
+              <v-icon v-if="authentication.password">mdi-close</v-icon>
+            </v-btn>
+          </template>
+        </v-text-field>
       </v-col>
       <v-col cols="12" xs="12" sm="3" md="3" lg="3" xl="3">
         <v-btn v-if="!Meteor.connected" @click="connect" color="error" elevation="0">
@@ -210,5 +222,7 @@ export default {
 </script>
 
 <style scoped>
-
+.tree-view-item-key {
+  color: red;
+}
 </style>
