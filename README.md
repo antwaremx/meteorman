@@ -1,4 +1,14 @@
-# meteorman
+<div align="center">
+<br>
+<img width="500" src="/src/renderer/assets/meteorman_logo.png" alt="meteorman">
+<br>
+<br>
+</div>
+
+<p align="center" color="#6a737d">
+A DDP Client With FUI (The Postman of Meteor)
+</p>
+
 
 > An electron-vue project
 
