@@ -30,16 +30,20 @@ Meteorman is The Postman of Meteor. Is a DDP Client with GUI
 - Linux 🐧 ✅
 - Windows ✅
 
+### Downloads:
+
+| Platform | Arch    | Version | Link                                               |
+| -------- | ------- | ------- | -------------------------------------------------- |
+| Windows  | x64     | 1.0.0   | [Download](https://github.com/antwaremx/meteorman) |
+| Mac      | x64     | 1.0.0   | [Download](https://github.com/antwaremx/meteorman) |
+| Linux    | x86_x64 | 1.0.0   | [Download](https://github.com/antwaremx/meteorman) |
+
 ## For Developers 🚀
 
 ### System Requirements 📋
 
 - NodeJs [Download here](https://nodejs.org/es/) 
 - Yarn [Download here](https://yarnpkg.com/getting-started/install)
-
-```
-You must have npm  / yarn and nodejs installed.
-```
 
 ### Instalación 🔧
 
@@ -50,19 +54,18 @@ $ git clone https://github.com/antwaremx/meteorman
 
 ### Build Setup📦
 
-``` bash
+```sh
 # install dependencies
-yarn install / yarn
+$ yarn install / yarn
 
 # serve with hot reload at localhost:9080
-yarn run dev
+$ yarn run dev
 
 # build electron application for production
-yarn run build
+$ yarn run build
 
 # run unit & end-to-end tests
-yarn test
-
+$ yarn test
 ```
 
 ---
