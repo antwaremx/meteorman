@@ -45,7 +45,7 @@ Meteorman is The Postman of Meteor. Is a DDP Client with GUI
 - NodeJs [Download here](https://nodejs.org/es/) 
 - Yarn [Download here](https://yarnpkg.com/getting-started/install)
 
-### Instalation 🔧
+### Installation 🔧
 
 [git](https://git-scm.com/) is required to run the following console commands:
 ```sh
