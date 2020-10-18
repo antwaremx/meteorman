@@ -6,8 +6,19 @@
 </div>
 
 <p align="center" color="#6a737d">
-A DDP Client With FUI (The Postman of Meteor)
+A DDP Client With GUI (The Postman of Meteor)
 </p>
+
+<div align="center">
+
+[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com) 
+[![forthebadge](http://forthebadge.com/images/badges/uses-js.svg)](http://forthebadge.com) 
+[![forthebadge](http://forthebadge.com/images/badges/makes-people-smile.svg)](http://forthebadge.com)
+[![forthebadge](https://forthebadge.com/images/badges/made-with-vue.svg)](http://forthebadge.com)
+</div>
+
+
+<div align="center">
 
 
 > An electron-vue project
