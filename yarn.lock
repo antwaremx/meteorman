@@ -10453,11 +10453,6 @@ vue-json-tree-view@^2.1.6:
     lodash "^4.17.4"
     vue "^2.5.16"
 
-vue-json-tree@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/vue-json-tree/-/vue-json-tree-0.4.3.tgz#54f05b1e867b1b36fdf60fb66162a8580e584cfc"
-  integrity sha512-x6YYKe9g0rwT8BXACrlCxZPzUbwEnxHEyjt+HF5AzXibm8iM4S2CKJSeXy0rDT58KVETGK1dWWvjTOKMDS6XkQ==
-
 vue-loader@^15.2.4:
   version "15.9.3"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.9.3.tgz#0de35d9e555d3ed53969516cac5ce25531299dda"
