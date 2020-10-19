@@ -27,7 +27,7 @@
                   </v-select>
                 </td>
                 <td>
-                  <div v-if="argument.type.name==='object' || argument.type.name==='array' || argument.type.name==='string' || argument.type.name==='none'">
+                  <div v-if="argument.type.name==='string' || argument.type.name==='none'">
                     <v-textarea @input="onChange(argument, index)" v-model="argument.value" dense rows="1"
                                 :placeholder="argument.value === null ? 'Value': ''"></v-textarea>
                   </div>
@@ -39,6 +39,12 @@
                     <v-checkbox @change="onChange(argument, index)" v-model="argument.value" dense></v-checkbox>
                     <span v-if="argument.value">true</span>
                     <span v-else>false</span>
+                  </div>
+                  <div v-else-if="argument.type.name === 'array'">
+                    <vue-json-editor v-model="argument.array" :show-btns="false" mode="code" :expandedOnStart="false"></vue-json-editor>
+                  </div>
+                  <div v-else-if="argument.type.name === 'object'">
+                    <vue-json-editor v-model="argument.json" :show-btns="false" mode="code" :expandedOnStart="false"></vue-json-editor>
                   </div>
                   <v-btn v-if="argument.type.name !== 'none' || argument.value !== null" icon class="remove-button" @click="removeGroup(index)">
                     <v-icon>mdi-close</v-icon>
@@ -55,17 +61,21 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
+import vueJsonEditor from 'vue-json-editor'
 
 export default {
   name: 'Arguments',
   components: {
     ValidationProvider,
-    ValidationObserver
+    ValidationObserver,
+    vueJsonEditor
   },
   data() {
     return {
       args: [
         {
+          array: [],
+          json: {},
           value: null,
           type: { name: 'none', description: 'Select one type' }
         }
@@ -97,12 +107,6 @@ export default {
         });
       }
     },
-    addGroup() {
-      this.args.push({
-        value: null,
-        type: { name: 'object', description: 'Object' }
-      });
-    },
     removeGroup(index) {
       this.args.splice(index, 1);
     }
@@ -127,5 +131,38 @@ export default {
 
 .param-row:hover .remove-button {
   display: block;
+  z-index: 2;
+}
+</style>
+
+<style>
+.jsoneditor-menu {
+  display: none;
+}
+div.jsoneditor {
+  border: none;
+}
+.ace-jsoneditor .ace_variable {
+  color: #9e3731 !important;
+  font-weight: 600;
+}
+
+.ace-jsoneditor .ace_string {
+  color: #2251a0 !important;
+  font-weight: 600;
+}
+
+.ace-jsoneditor .ace_constant.ace_language {
+  color: #2251a0 !important;
+  font-weight: 600;
+}
+
+.ace-jsoneditor .ace_constant.ace_numeric {
+  color: #3c845c !important;
+  font-weight: 600;
+}
+
+.ace-jsoneditor .ace_text-layer {
+  color: black !important;
 }
 </style>
