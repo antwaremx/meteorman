@@ -20,7 +20,7 @@ const { mapState } = createNamespacedHelpers('dragAndDrop');
 export default {
   name: 'MethodResponse',
   data: () => ({
-    height: 500,
+    height: 200,
     response: ''
   }),
   watch: {
@@ -46,7 +46,7 @@ export default {
   position: fixed;
   left: 0;
   bottom: 0;
-  border: 1px solid grey;
+  border: 1px solid #ccc;
   background-color: white;
 }
 

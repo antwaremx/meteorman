@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <server-connection ref="serverRef" @onUpdateConnection="updateConnection"></server-connection>
-    <div v-if="connected">
+    <div>
       <v-row>
         <v-col cols="3">
           <v-select :items="dppTypes" v-model="typeSelected" dense outlined/>

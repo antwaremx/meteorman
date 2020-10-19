@@ -62,7 +62,7 @@
     "simpleddp-plugin-login": "^4.0.2",
     "utf-8-validate": "^5.0.2",
     "vee-validate": "^3.4.2",
-    "vue": "^2.5.16",
+    "vue": "^2.6.12",
     "vue-electron": "^1.0.6",
     "vue-json-tree-view": "^2.1.6",
     "vue-router": "^3.0.1",

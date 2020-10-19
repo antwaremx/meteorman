@@ -1,63 +1,56 @@
 <template>
-  <v-form>
-    <v-card>
-      <v-card-title>
-        <div class="subtitle-2">Arguments</div>
-        <v-spacer></v-spacer>
-        <v-tooltip bottom>
-          <template v-slot:activator="{on}">
-            <v-btn fab dark small color="success" v-on="on" @click="addGroup">
-              <v-icon>add</v-icon>
-            </v-btn>
-          </template>
-          <span>Add argument</span>
-        </v-tooltip>
-      </v-card-title>
-      <v-card-text>
-        <v-row v-for="(argument,index) in args" :key="index">
-          {{ '#'+(index+1) }}
-          <v-col cols="12" sm="6" md="4" class="select">
-            <ValidationProvider v-slot="{ errors }" name="Type" rules="required">
-              <v-select v-model="argument.type" :items="argumentTypes"
-                        :error-messages="errors" return-object
-                        item-text="description" item-value="name" label="Type" dense>
-              </v-select>
-            </ValidationProvider>
-          </v-col>
-          <v-col cols="12" sm="6" md="4" v-if="argument.type.name==='number'">
-            <ValidationProvider v-slot="{ errors }" name="value" rules="required">
-              <v-text-field v-model.number="argument.value" type="number" dense label="Number*"
-                            :error-messages="errors">
-              </v-text-field>
-            </ValidationProvider>
-          </v-col>
-          <v-col cols="12" sm="6" md="6"
-                 v-if="argument.type.name==='object' || argument.type.name==='array' || argument.type.name==='string'">
-            <ValidationProvider v-slot="{errors}" name="value" rules="required">
-              <v-textarea
-                  v-model="argument.value"
-                  :error-messages="errors"
-                  outlined
-                  label="Object, Array or String"
-                  rows="3"
-              ></v-textarea>
-            </ValidationProvider>
-          </v-col>
-          <v-col cols="12" sm="6" md="4" v-if="argument.type.name==='boolean'">
-              <v-checkbox v-model="argument.value" label="Boolean"></v-checkbox>
-          </v-col>
-          <v-tooltip bottom>
-            <template v-slot:activator="{on}">
-              <v-btn @click="removeGroup(index)" v-on="on" icon x-small color="error" class="mt-5">
-                <v-icon>delete</v-icon>
-              </v-btn>
+    <v-form>
+      <v-card>
+        <v-card-title>
+          <div class="text-caption grey--text">Params</div>
+          <v-spacer></v-spacer>
+        </v-card-title>
+        <v-card-text>
+          <v-simple-table dense>
+            <template v-slot:default>
+              <thead>
+              <tr>
+                <th class="text-left" width="200px">
+                  TYPE
+                </th>
+                <th class="text-left">
+                  VALUE
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="(argument, index) in args" :key="index" class="param-row">
+                <td>
+                  <v-select v-model="argument.type" :items="argumentTypes" return-object
+                            @change="onChange(argument, index)"
+                            item-text="description" item-value="name" dense>
+                  </v-select>
+                </td>
+                <td>
+                  <div v-if="argument.type.name==='object' || argument.type.name==='array' || argument.type.name==='string' || argument.type.name==='none'">
+                    <v-textarea @input="onChange(argument, index)" v-model="argument.value" dense rows="1"
+                                :placeholder="argument.value === null ? 'Value': ''"></v-textarea>
+                  </div>
+                  <div v-else-if="argument.type.name==='number'">
+                    <v-text-field @input="onChange(argument, index)" v-model.number="argument.value"
+                                  :placeholder="argument.value === null ? 'Value': ''" type="number" dense></v-text-field>
+                  </div>
+                  <div v-else-if="argument.type.name==='boolean'" class="d-flex align-center">
+                    <v-checkbox @change="onChange(argument, index)" v-model="argument.value" dense></v-checkbox>
+                    <span v-if="argument.value">true</span>
+                    <span v-else>false</span>
+                  </div>
+                  <v-btn v-if="argument.type.name !== 'none' || argument.value !== null" icon class="remove-button" @click="removeGroup(index)">
+                    <v-icon>mdi-close</v-icon>
+                  </v-btn>
+                </td>
+              </tr>
+              </tbody>
             </template>
-            <span>remove</span>
-          </v-tooltip>
-        </v-row>
-      </v-card-text>
-    </v-card>
-  </v-form>
+          </v-simple-table>
+        </v-card-text>
+      </v-card>
+    </v-form>
 </template>
 
 <script>
@@ -71,19 +64,39 @@ export default {
   },
   data() {
     return {
-      args: [],
+      args: [
+        {
+          value: null,
+          type: { name: 'none', description: 'Select one type' }
+        }
+      ],
       argumentTypes: [
-        { name: 'object', description: 'Object' },
-        { name: 'array', description: 'Array' },
+        { name: 'none', description: 'Select one type' },
         { name: 'string', description: 'String' },
         { name: 'number', description: 'Number' },
         { name: 'boolean', description: 'Boolean' },
-        { name: 'fileAsBase64', description: 'File as Base 64' },//TODO: Comming soon...
-        { name: 'fileBinary', description: 'File as Binary' }//TODO: Comming soon...
+        { name: 'object', description: 'Object' },
+        { name: 'array', description: 'Array' }
       ]
     };
   },
+  watch: {
+    args(newValue, oldValue) {
+      if (oldValue.length < newValue.length) {
+        const lastArg = newValue[newValue.length - 1];
+
+      }
+    }
+  },
   methods: {
+    onChange(item, index) {
+      if (this.args.length - 1 === index) {
+        this.args.push({
+          value: null,
+          type: { name: 'none', description: 'Select one type' }
+        });
+      }
+    },
     addGroup() {
       this.args.push({
         value: null,
@@ -98,5 +111,21 @@ export default {
 </script>
 
 <style scoped>
+.param-row td:last-child {
+  position: relative;
+}
 
+.remove-button {
+  position: absolute;
+  right: 20px;
+  top: 0;
+}
+
+.param-row .remove-button {
+  display: none;
+}
+
+.param-row:hover .remove-button {
+  display: block;
+}
 </style>
