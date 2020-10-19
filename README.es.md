@@ -6,7 +6,7 @@
 </div>
 
 <p align="center" color="#6a737d">
-A DDP Client with GUI
+Cliente DDP con interfaz gráfica de usuario.
 </p>
 
 <div align="center">
@@ -16,55 +16,55 @@ A DDP Client with GUI
 [![forthebadge](https://forthebadge.com/images/badges/made-with-vue.svg)](http://forthebadge.com)
 [![forthebadge](http://forthebadge.com/images/badges/makes-people-smile.svg)](http://forthebadge.com)
   
-*Read this in other languages: [Spanish](README.es.md)
+*Read this in other languages: [English](README.md)
 
 </div>
 
-## Starting 🚀
+## Empezando 🚀
 
-Meteorman is The Postman of Meteor. Is a DDP Client with GUI
+Meteorman es el Postman de Meteor. Es un Cliente DDP con interfaz gráfica de usuario.
 
-### Supported Platforms 💻
+### Plataformas Soportadas 💻
 
 - macOS 🍎 ✅
 - Linux 🐧 ✅
 - Windows ✅
 
-### Downloads 💾 
+### Descargas 💾 
 
-| Platform | Arch    | Version | Link                                                                                                              |
+| Plataforma | Arquitectura    | Version | Enlace                                                                                                  |
 | ---------- | --------------- | ------- | ------------------------------------------------------------------------------------------------------- |
 | Windows    | x64             | 1.0.0   | [Download](https://github.com/antwaremx/meteorman/releases/download/v0.0.1/meteorman.windows.0.0.1.exe) |
 | Mac        | x64             | 1.0.0   | [Download](https://github.com/antwaremx/meteorman/releases/download/v0.0.1/meteorman.macOS.0.0.1.dmg).  |
 | Linux      | x86_x64         | 1.0.0   | [Download](https://github.com/antwaremx/meteorman)                                                      |
 
-## For Developers 🚀
+## Para desarrolladores 🚀
 
-### System Requirements 📋
+### Requerimientos del sistema 📋
 
-- NodeJs [Download here](https://nodejs.org/es/) 
-- Yarn [Download here](https://yarnpkg.com/getting-started/install)
+- NodeJs [Descargar aquí](https://nodejs.org/es/) 
+- Yarn [Descargar aquí](https://yarnpkg.com/getting-started/install)
 
-### Installation 🔧
+### Instalación 🔧
 
-[git](https://git-scm.com/) is required to run the following console commands:
+Se requiere [git] (https://git-scm.com/) para ejecutar los siguientes comandos en consola:
 ```sh
 $ git clone https://github.com/antwaremx/meteorman
 ```
 
-### Build Setup 📦
+### Compilación 📦
 
 ```sh
 # install dependencies
 $ yarn install / yarn
 
-# serve with hot reload at localhost:9080
+# Server con recarga automatica en localhost:9080
 $ yarn run dev
 
-# build electron application for production
+# Compilar aplicacion en electron para production
 $ yarn run build
 
-# run unit & end-to-end tests
+# Ejecutar unit & end-to-end tests
 $ yarn test
 ```
 
