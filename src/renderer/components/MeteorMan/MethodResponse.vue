@@ -48,10 +48,17 @@ export default {
   bottom: 0;
   border: 1px solid #ccc;
   background-color: white;
+  overflow: scroll;
 }
 
 .header {
-  position: relative;
+  position: fixed;
+  width: 100%;
+  background: white;
+}
+
+.content {
+  margin-top: 40px;
 }
 
 .drag-icon {

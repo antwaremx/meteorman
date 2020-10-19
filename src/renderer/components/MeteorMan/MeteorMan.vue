@@ -34,20 +34,6 @@
           <arguments ref="argsRef"></arguments>
         </v-col>
       </v-row>
-      <v-row>
-        <v-col cols="12">
-          <v-textarea v-if="typeSelected==='Method'"
-                      v-model="methodResponse"
-                      outlined
-                      label="Method Response"
-                      rows="10"></v-textarea>
-          <v-textarea v-else
-                      v-model="subscriptionResponse"
-                      outlined
-                      label="Publication Response"
-                      rows="10"></v-textarea>
-        </v-col>
-      </v-row>
     </div>
     <method-response ref="methodResponseRef"></method-response>
   </v-container>
@@ -108,12 +94,14 @@ export default {
         await this.isSubscriptionInProgress.ready();
         const firstResponse = this.$refs.serverRef.Meteor.collection(this.publication.collectionName).filter(e => e).fetch();
         this.subscriptionResponse = JSON.stringify(firstResponse, undefined, 4);
+        this.$refs.methodResponseRef.loadResponse(firstResponse);
         this.$refs.serverRef.Meteor.collection(this.publication.collectionName).filter(e => e).onChange(({ prev, next }) => {
           this.subscriptionResponse = JSON.stringify(next, undefined, 4);
         });
       } catch (exception) {
         console.error('subscription error: ', exception);
         this.subscriptionResponse = JSON.stringify(exception, undefined, 4);
+        this.$refs.methodResponseRef.loadResponse(exception);
       }
     },
     loadArguments(args) {
@@ -121,8 +109,10 @@ export default {
       for (let arg of args) {
         switch (arg.type.name) {
           case 'object':
+            finalArgs.push(arg.json);
+            break;
           case 'array':
-            finalArgs.push(JSON.parse(arg.value));
+            finalArgs.push(arg.array);
             break;
           case 'string':
             finalArgs.push(arg.value);

@@ -46,7 +46,7 @@
                   <div v-else-if="argument.type.name === 'object'">
                     <vue-json-editor v-model="argument.json" :show-btns="false" mode="code" :expandedOnStart="false"></vue-json-editor>
                   </div>
-                  <v-btn v-if="argument.type.name !== 'none' || argument.value !== null" icon class="remove-button" @click="removeGroup(index)">
+                  <v-btn tabindex="-1" v-if="argument.type.name !== 'none' || argument.value !== null" icon class="remove-button" @click="removeGroup(index)">
                     <v-icon>mdi-close</v-icon>
                   </v-btn>
                 </td>
