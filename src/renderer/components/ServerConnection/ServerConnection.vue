@@ -1,89 +1,103 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" xs="12" sm="10" md="10" lg="10" xl="10">
-        <v-text-field v-model="serverConnection.host" label="Host" outlined clearable :disabled="Meteor.connected"/>
-      </v-col>
-      <v-col cols="12" xs="12" sm="2" md="2" lg="2" xl="2">
-        <v-text-field v-model="serverConnection.port" label="Port" outlined clearable :disabled="Meteor.connected"/>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-expansion-panels inset>
-        <v-expansion-panel>
-          <v-expansion-panel-header>Advanced options</v-expansion-panel-header>
-          <v-expansion-panel-content>
-            <v-row justify="space-around"
-                   no-gutters>
-              <v-col cols="12" xs="12" sm="2" md="2" lg="2" xl="2">
-                <v-select
-                    :items="protocols"
-                    v-model="serverConnection.protocol"
-                    item-text="description"
-                    item-value="name"
-                    dense
-                    outlined :disabled="Meteor.connected"
-                />
-              </v-col>
-              <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4">
-                <v-text-field v-model="serverConnection.path" label="Path" outlined clearable :disabled="Meteor.connected"/>
-              </v-col>
-              <v-col cols="12" xs="12" sm="3" md="3" lg="3" xl="3">
-                <v-text-field v-model="serverConnection.reconnectInterval" label="Reconnect interval" outlined
-                              clearable :disabled="Meteor.connected"/>
-              </v-col>
-              <v-col cols="12" xs="12" sm="3" md="3" lg="3" xl="3">
-                <v-text-field v-model="serverConnection.maxTimeout" label="Max Timeout" outlined clearable :disabled="Meteor.connected"/>
-              </v-col>
-            </v-row>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-    </v-row>
-    <v-row>
-      <v-col cols="12" xs="12" sm="2" md="2" lg="2" xl="2">
-        <v-select
-            :items="authenticationTypes"
-            v-model="authentication.type"
-            item-text="description"
-            item-value="name"
-            dense
-            outlined :disabled="Meteor.connected"
-        />
-      </v-col>
-      <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4">
-        <v-text-field v-model="authentication.userOrEmail" label="User/Email" outlined :disabled="Meteor.connected">
+      <v-col class="d-flex auth-wrapper">
+        <v-text-field v-model="serverConnection.host" label="Host" outlined dense
+                      background-color="#fafafa"
+                      class="start-addon" :disabled="Meteor.connected">
+          <template v-slot:append>
+            <v-btn icon @click="serverConnection.host = ''" tabindex="-1" class="pb-5">
+              <v-icon v-if="serverConnection.host">mdi-close</v-icon>
+            </v-btn>
+          </template>
+        </v-text-field>
+        <v-text-field v-model="serverConnection.port" label="Port" outlined dense background-color="#fafafa"
+                      class="mid-addon" :disabled="Meteor.connected">
+          <template v-slot:append>
+            <v-btn icon @click="serverConnection.port = ''" tabindex="-1" class="pb-5">
+              <v-icon v-if="serverConnection.port">mdi-close</v-icon>
+            </v-btn>
+          </template>
+        </v-text-field>
+        <div class="small-field">
+          <v-select
+              background-color="#fafafa"
+              :class="authentication.type !== 'none' ? 'mid-addon': 'end-addon'"
+              :items="authenticationTypes"
+              v-model="authentication.type"
+              item-text="description"
+              item-value="name"
+              dense
+              outlined :disabled="Meteor.connected"/>
+        </div>
+        <v-text-field v-if="authentication.type !== 'none'" v-model="authentication.userOrEmail" label="User/Email"
+                      dense outlined :disabled="Meteor.connected" class="mid-addon" background-color="#fafafa">
           <template v-slot:append>
             <v-btn icon @click="authentication.userOrEmail = ''" tabindex="-1" class="pb-5">
               <v-icon v-if="authentication.userOrEmail">mdi-close</v-icon>
             </v-btn>
           </template>
         </v-text-field>
-      </v-col>
-      <v-col cols="12" xs="12" sm="3" md="3" lg="3" xl="3">
-        <v-text-field v-model="authentication.password" label="Password" outlined :disabled="Meteor.connected">
+        <v-text-field v-if="authentication.type !== 'none'" v-model="authentication.password" label="Password"
+                      dense outlined :disabled="Meteor.connected" class="mid-addon" background-color="#fafafa">
           <template v-slot:append>
             <v-btn icon @click="authentication.password = ''" tabindex="-1" class="pb-5">
               <v-icon v-if="authentication.password">mdi-close</v-icon>
             </v-btn>
           </template>
         </v-text-field>
-      </v-col>
-      <v-col cols="12" xs="12" sm="3" md="3" lg="3" xl="3">
-        <v-btn v-if="!Meteor.connected" @click="connect" color="error" elevation="0">
+        <v-btn v-if="!Meteor.connected" @click="connect" height="40px" color="error" elevation="0" class="ml-2">
           Connect
           <v-icon right small>
             mdi-send
           </v-icon>
         </v-btn>
-        <v-btn v-else @click="disconnectFromServer" color="error" elevation="0">
+        <v-btn v-else @click="disconnectFromServer" height="40px" color="error" elevation="0" class="ml-2">
           Disconnect
           <v-icon right small>
             stop
           </v-icon>
         </v-btn>
+        <v-btn height="40px" color="error" elevation="0" class="ml-2" @click="openAdvancedOptions">
+          <v-icon>
+            mdi-cogs
+          </v-icon>
+        </v-btn>
       </v-col>
     </v-row>
+    <modal-accept ref="advancedOptionsRef">
+      <v-select
+          :items="protocols"
+          v-model="serverConnection.protocol"
+          item-text="description"
+          item-value="name"
+          dense
+          outlined :disabled="Meteor.connected"
+      />
+      <v-text-field v-model="serverConnection.path" label="Path" outlined dense :disabled="Meteor.connected">
+        <template v-slot:append>
+          <v-btn icon @click="serverConnection.path = ''" tabindex="-1" class="pb-5">
+            <v-icon v-if="serverConnection.path">mdi-close</v-icon>
+          </v-btn>
+        </template>
+      </v-text-field>
+      <v-text-field v-model="serverConnection.reconnectInterval" label="Reconnect interval" outlined dense
+                    :disabled="Meteor.connected">
+        <template v-slot:append>
+          <v-btn icon @click="serverConnection.reconnectInterval = ''" tabindex="-1" class="pb-5">
+            <v-icon v-if="serverConnection.reconnectInterval">mdi-close</v-icon>
+          </v-btn>
+        </template>
+      </v-text-field>
+      <v-text-field v-model="serverConnection.maxTimeout" label="Max Timeout" outlined dense
+                    :disabled="Meteor.connected">
+        <template v-slot:append>
+          <v-btn icon @click="serverConnection.maxTimeout = ''" tabindex="-1" class="pb-5">
+            <v-icon v-if="serverConnection.maxTimeout">mdi-close</v-icon>
+          </v-btn>
+        </template>
+      </v-text-field>
+    </modal-accept>
     <v-row>
       <v-col cols="12" class="text-center">
         Connection status: {{ Meteor.connected ? 'Connected' : 'Disconnected' }} {{ statusAuthentication }}
@@ -96,9 +110,11 @@
 import SimpleDDP from 'simpleddp';
 import { simpleDDPLogin } from 'simpleddp-plugin-login';
 import ws from 'isomorphic-ws';
+import ModalAccept from '../Utilities/Modals/ModalAccept';
 
 export default {
   name: 'ServerConnection',
+  components: { ModalAccept },
   data() {
     return {
       serverConnection: {
@@ -113,13 +129,14 @@ export default {
         connected: false
       },
       authentication: {
-        type: 'username',
+        type: 'none',
         userOrEmail: null,
         password: null
       },
       authenticationTypes: [
-        { name: 'username', description: 'As Username' },
-        { name: 'email', description: 'As Email' }
+        { name: 'none', description: 'No auth' },
+        { name: 'username', description: 'User' },
+        { name: 'email', description: 'Email' }
       ],
       protocols: [
         { name: 'ws', description: 'WS Protocol' },
@@ -141,6 +158,10 @@ export default {
     }
   },
   methods: {
+    openAdvancedOptions() {
+      this.$refs.advancedOptionsRef.title = 'Advanced options';
+      this.$refs.advancedOptionsRef.dialog = true;
+    },
     initializeListeners() {
       this.Meteor.on('connected', async () => {
         console.info('Connected to the server');
@@ -222,6 +243,9 @@ export default {
 </script>
 
 <style scoped>
+.auth-wrapper /deep/ .v-input__control {
+  height: 40px;
+}
 .tree-view-item-key {
   color: red;
 }

@@ -1,13 +1,15 @@
 <template>
   <v-container>
     <server-connection ref="serverRef" @onUpdateConnection="updateConnection"></server-connection>
-    <div>
+    <div class="connection-wrapper">
       <v-row>
-        <v-col cols="3">
-          <v-select :items="dppTypes" v-model="typeSelected" dense outlined/>
-        </v-col>
-        <v-col cols="7">
-          <v-text-field v-if="typeSelected==='Method'" placeholder="method name"
+        <v-col class="d-flex">
+          <div class="small-field">
+            <v-select :items="dppTypes" v-model="typeSelected" dense outlined class="start-addon"
+                      background-color="#ececec"/>
+          </div>
+          <v-text-field v-if="typeSelected==='Method'" placeholder="Enter method name" class="end-addon"
+                        background-color="#ececec"
                         v-model="meteorMethod.name" dense outlined type="text">
             <template v-slot:append>
               <v-btn icon @click="meteorMethod.name = ''" tabindex="-1" class="pb-5">
@@ -19,14 +21,18 @@
                         v-model="publication.name" dense outlined clearable type="text"/>
           <v-text-field v-if="typeSelected==='Subscription'" placeholder="collection name"
                         v-model="publication.collectionName" dense outlined clearable type="text"/>
+          <v-btn v-on:click="ddp()" class="ml-2" color="#387be5" dark elevation="0" height="40px">
+            Send
+            <v-icon right small>mdi-send</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="3">
+        </v-col>
+        <v-col cols="7">
         </v-col>
         <v-col cols="2">
-          <v-btn v-on:click="ddp()" color="error" elevation="0">
-            Enviar
-            <v-icon right small>
-              mdi-send
-            </v-icon>
-          </v-btn>
         </v-col>
       </v-row>
       <v-row>
@@ -139,6 +145,11 @@ export default {
 };
 </script>
 
+<style scoped>
+.connection-wrapper /deep/ .v-input__control {
+  height: 40px;
+}
+</style>
 <style>
 .tree-view-item-key {
   color: #9e3731;

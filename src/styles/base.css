@@ -1,0 +1,17 @@
+.small-field {
+	width: 160px;
+}
+
+.start-addon {
+	border-bottom-right-radius: 0 !important;
+	border-top-right-radius: 0 !important;
+}
+
+.end-addon {
+	border-bottom-left-radius: 0 !important;
+	border-top-left-radius: 0 !important;
+}
+
+.mid-addon {
+	border-radius: 0 !important;
+}

@@ -17,6 +17,4 @@
   }
 </script>
 
-<style>
-  /* CSS */
-</style>
+<style src="./../styles/base.css"></style>
