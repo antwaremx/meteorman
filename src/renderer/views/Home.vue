@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" @dragover="onDragOver($event)">
+  <div class="wrapper">
     <app-bar/>
     <v-card>
       <v-tabs
@@ -45,8 +45,6 @@
 <script>
 import AppBar from '../components/AppBar/AppBar';
 import MeteorMan from '../components/MeteorMan/MeteorMan';
-import { createNamespacedHelpers } from 'vuex';
-const { mapActions, mapState } = createNamespacedHelpers('dragAndDrop');
 
 export default {
   name: 'home',
@@ -60,21 +58,6 @@ export default {
   watch: {
     length(val) {
       this.tab = val - 1;
-    }
-  },
-  computed: {
-    ...mapState(['responses'])
-  },
-  methods: {
-    ...mapActions(['setResponseHeight']),
-    onDragOver(event) {
-      const height = window.innerHeight - event.y;
-      if (this.responses['main'] !== height) {
-        this.setResponseHeight({
-          key: 'main', // TODO: Replace this by active tab
-          height
-        })
-      }
     }
   }
 };

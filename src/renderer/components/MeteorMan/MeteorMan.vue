@@ -27,13 +27,15 @@
           </v-btn>
         </v-col>
       </v-row>
-      <v-row>
-        <v-col cols="12">
+      <Split style="height: calc(100vh - 250px);" direction="vertical">
+        <SplitArea>
           <arguments ref="argsRef"></arguments>
-        </v-col>
-      </v-row>
+        </SplitArea>
+        <SplitArea>
+          <method-response ref="methodResponseRef"></method-response>
+        </SplitArea>
+      </Split>
     </div>
-    <method-response ref="methodResponseRef"></method-response>
   </v-container>
 </template>
 
@@ -43,7 +45,7 @@ import Arguments from './Arguments';
 import MethodResponse from './MethodResponse';
 
 export default {
-  name: 'MeteorMan',
+  name: 'MeteorMan', // TODO: Refactor the name of this component
   components: { MethodResponse, Arguments, ServerConnection },
   data() {
     return {
@@ -64,7 +66,8 @@ export default {
       subscriptionResponse: '',
       isSubscriptionInProgress: null,
       connected: false,
-      methodResponseParsed: ''
+      methodResponseParsed: '',
+      defaultHeight: window.innerHeight - 288
     };
   },
   methods: {

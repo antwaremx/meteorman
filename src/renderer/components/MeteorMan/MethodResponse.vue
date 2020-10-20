@@ -1,10 +1,7 @@
 <template>
-  <v-container fluid class="response-wrapper" :style="{ height: height + 'px' }">
-    <div class="header">
+  <v-container fluid>
+    <div>
       <p class="text-caption grey--text">Response</p>
-      <div class="drag-icon" draggable="true">
-        <v-icon>mdi-drag-horizontal-variant</v-icon>
-      </div>
     </div>
     <div class="content">
       <tree-view :data="response" :options="{maxDepth: 3, link: true}"></tree-view>
@@ -40,23 +37,6 @@ export default {
 </script>
 
 <style scoped>
-.response-wrapper {
-  height: 500px;
-  width: 100%;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  border: 1px solid #ccc;
-  background-color: white;
-  overflow: scroll;
-}
-
-.header {
-  position: fixed;
-  width: 100%;
-  background: white;
-}
-
 .content {
   margin-top: 40px;
 }
