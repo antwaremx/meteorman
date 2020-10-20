@@ -4,31 +4,14 @@
         color="#DE3F46"
         flat
         dense
-        dark
-    >
-      <v-btn small>
-        <v-icon small left>
-          mdi-plus
-        </v-icon>
-        Nuevo
-      </v-btn>
-
+        dark>
       <v-spacer></v-spacer>
-
       <img
           class="meteorman"
           src="../../assets/logobn.png"
           alt="meteorman"
-          v-on:click=""
-      >
-
+          v-on:click="">
       <v-spacer></v-spacer>
-      <v-btn small>
-        Actualizar
-        <v-icon small right>
-          mdi-star
-        </v-icon>
-      </v-btn>
     </v-app-bar>
   </div>
 </template>
