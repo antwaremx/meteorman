@@ -17,9 +17,11 @@
               </v-btn>
             </template>
           </v-text-field>
-          <v-text-field v-else placeholder="publication name"
+          <v-text-field v-else placeholder="Enter publication name" class="mid-addon"
+                        background-color="#ececec"
                         v-model="publication.name" dense outlined clearable type="text"/>
-          <v-text-field v-if="typeSelected==='Subscription'" placeholder="collection name"
+          <v-text-field v-if="typeSelected==='Subscription'" placeholder="Enter collection name" class="end-addon"
+                        background-color="#ececec"
                         v-model="publication.collectionName" dense outlined clearable type="text"/>
           <v-btn v-on:click="ddp()" class="ml-2" color="#387be5" dark elevation="0" height="40px">
             Send
