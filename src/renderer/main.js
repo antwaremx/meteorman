@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import axios from 'axios';
 
+import './plugins/index';
 import App from './App';
 import router from './router';
 import store from './store';
 import vuetify from './plugins/vuetify';
-import './plugins/index';
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
 Vue.http = Vue.prototype.$http = axios;

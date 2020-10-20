@@ -1,74 +1,65 @@
 <template>
     <v-form>
-      <v-card>
-        <v-card-title>
-          <div class="text-caption grey--text">Params</div>
-          <v-spacer></v-spacer>
-        </v-card-title>
-        <v-card-text>
-          <v-simple-table dense>
-            <template v-slot:default>
-              <thead>
-              <tr>
-                <th class="text-left" width="200px">
-                  TYPE
-                </th>
-                <th class="text-left">
-                  VALUE
-                </th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="(argument, index) in args" :key="index" class="param-row">
-                <td>
-                  <v-select v-model="argument.type" :items="argumentTypes" return-object
-                            @change="onChange(argument, index)"
-                            item-text="description" item-value="name" dense>
-                  </v-select>
-                </td>
-                <td>
-                  <div v-if="argument.type.name==='string' || argument.type.name==='none'">
-                    <v-textarea @input="onChange(argument, index)" v-model="argument.value" dense rows="1"
-                                :placeholder="argument.value === null ? 'Value': ''"></v-textarea>
-                  </div>
-                  <div v-else-if="argument.type.name==='number'">
-                    <v-text-field @input="onChange(argument, index)" v-model.number="argument.value"
-                                  :placeholder="argument.value === null ? 'Value': ''" type="number" dense></v-text-field>
-                  </div>
-                  <div v-else-if="argument.type.name==='boolean'" class="d-flex align-center">
-                    <v-checkbox @change="onChange(argument, index)" v-model="argument.value" dense></v-checkbox>
-                    <span v-if="argument.value">true</span>
-                    <span v-else>false</span>
-                  </div>
-                  <div v-else-if="argument.type.name === 'array'">
-                    <vue-json-editor v-model="argument.array" :show-btns="false" mode="code" :expandedOnStart="false"></vue-json-editor>
-                  </div>
-                  <div v-else-if="argument.type.name === 'object'">
-                    <vue-json-editor v-model="argument.json" :show-btns="false" mode="code" :expandedOnStart="false"></vue-json-editor>
-                  </div>
-                  <v-btn tabindex="-1" v-if="argument.type.name !== 'none' || argument.value !== null" icon class="remove-button" @click="removeGroup(index)">
-                    <v-icon>mdi-close</v-icon>
-                  </v-btn>
-                </td>
-              </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
-        </v-card-text>
-      </v-card>
+      <div class="text-caption grey--text">Params</div>
+      <v-simple-table dense>
+        <template v-slot:default>
+          <thead>
+          <tr>
+            <th class="text-left" width="200px">
+              TYPE
+            </th>
+            <th class="text-left">
+              VALUE
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="(argument, index) in args" :key="index" class="param-row">
+            <td>
+              <v-select v-model="argument.type" :items="argumentTypes" return-object
+                        @change="onChange(argument, index)"
+                        item-text="description" item-value="name" dense>
+              </v-select>
+            </td>
+            <td>
+              <div v-if="argument.type.name==='string' || argument.type.name==='none'">
+                <v-textarea @input="onChange(argument, index)" v-model="argument.value" dense rows="1"
+                            :placeholder="argument.value === null ? 'Value': ''"></v-textarea>
+              </div>
+              <div v-else-if="argument.type.name==='number'">
+                <v-text-field @input="onChange(argument, index)" v-model.number="argument.value"
+                              :placeholder="argument.value === null ? 'Value': ''" type="number" dense></v-text-field>
+              </div>
+              <div v-else-if="argument.type.name==='boolean'" class="d-flex align-center">
+                <v-checkbox @change="onChange(argument, index)" v-model="argument.value" dense></v-checkbox>
+                <span v-if="argument.value">true</span>
+                <span v-else>false</span>
+              </div>
+              <div v-else-if="argument.type.name === 'array'">
+                <vue-json-editor v-model="argument.array" :show-btns="false" mode="code" :expandedOnStart="false"></vue-json-editor>
+              </div>
+              <div v-else-if="argument.type.name === 'object'">
+                <vue-json-editor v-model="argument.json" :show-btns="false" mode="code" :expandedOnStart="false"></vue-json-editor>
+              </div>
+              <v-btn tabindex="-1" v-if="argument.type.name !== 'none' || argument.value !== null" icon class="remove-button" @click="removeGroup(index)">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </td>
+          </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
     </v-form>
 </template>
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
-import vueJsonEditor from 'vue-json-editor'
 
 export default {
   name: 'Arguments',
   components: {
     ValidationProvider,
-    ValidationObserver,
-    vueJsonEditor
+    ValidationObserver
   },
   data() {
     return {

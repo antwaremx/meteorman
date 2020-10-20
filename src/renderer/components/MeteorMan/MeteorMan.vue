@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <server-connection ref="serverRef" @onUpdateConnection="updateConnection"></server-connection>
     <div class="connection-wrapper">
       <v-row>
@@ -25,14 +25,6 @@
             Send
             <v-icon right small>mdi-send</v-icon>
           </v-btn>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="3">
-        </v-col>
-        <v-col cols="7">
-        </v-col>
-        <v-col cols="2">
         </v-col>
       </v-row>
       <v-row>

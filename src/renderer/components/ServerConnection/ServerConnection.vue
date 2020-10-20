@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div>
     <v-row>
       <v-col class="d-flex auth-wrapper">
         <v-text-field v-model="serverConnection.host" label="Host" outlined dense
@@ -11,14 +11,16 @@
             </v-btn>
           </template>
         </v-text-field>
-        <v-text-field v-model="serverConnection.port" label="Port" outlined dense background-color="#fafafa"
-                      class="mid-addon" :disabled="Meteor.connected">
-          <template v-slot:append>
-            <v-btn icon @click="serverConnection.port = ''" tabindex="-1" class="pb-5">
-              <v-icon v-if="serverConnection.port">mdi-close</v-icon>
-            </v-btn>
-          </template>
-        </v-text-field>
+        <div class="small-field">
+          <v-text-field v-model="serverConnection.port" label="Port" outlined dense background-color="#fafafa"
+                        class="mid-addon" :disabled="Meteor.connected">
+            <template v-slot:append>
+              <v-btn icon @click="serverConnection.port = ''" tabindex="-1" class="pb-5">
+                <v-icon v-if="serverConnection.port">mdi-close</v-icon>
+              </v-btn>
+            </template>
+          </v-text-field>
+        </div>
         <div class="small-field">
           <v-select
               background-color="#fafafa"
@@ -98,12 +100,7 @@
         </template>
       </v-text-field>
     </modal-accept>
-    <v-row>
-      <v-col cols="12" class="text-center">
-        Connection status: {{ Meteor.connected ? 'Connected' : 'Disconnected' }} {{ statusAuthentication }}
-      </v-col>
-    </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script>
