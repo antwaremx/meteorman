@@ -90,10 +90,14 @@ export default {
     },
     async subscribeToPublication(args) {
       try {
-        if (this.isSubscriptionInProgress) {
-          await this.isSubscriptionInProgress.stop();
+        if(this.isSubscriptionInProgress){
+          if (await this.isSubscriptionInProgress.isOn()) {
+            await this.isSubscriptionInProgress.stop();
+            this.$refs.serverRef.Meteor.stopChangeListeners();
+          }
         }
         this.isSubscriptionInProgress = this.$refs.serverRef.Meteor.subscribe(this.publication.name, ...args);
+        await this.isSubscriptionInProgress.start();
         await this.isSubscriptionInProgress.ready();
         const firstResponse = this.$refs.serverRef.Meteor.collection(this.publication.collectionName).filter(e => e).fetch();
         this.subscriptionResponse = JSON.stringify(firstResponse, undefined, 4);
