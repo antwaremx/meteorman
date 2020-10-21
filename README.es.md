@@ -24,6 +24,11 @@ Cliente DDP con interfaz gráfica de usuario.
 
 Meteorman es el Postman de Meteor. Es un Cliente DDP con interfaz gráfica de usuario.
 
+### Demostración 🎥
+
+![](example.gif)
+
+
 ### Plataformas Soportadas 💻
 
 - macOS 🍎 ✅
