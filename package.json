@@ -8,6 +8,7 @@
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
     "build-win": "node .electron-vue/build.js && electron-builder -w",
+    "build-linux": "node .electron-vue/build.js && electron-builder -l",
     "build:dir": "node .electron-vue/build.js && electron-builder --dir",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
@@ -51,6 +52,7 @@
       "icon": "build/icons/icon.ico"
     },
     "linux": {
+      "category": "Utility",
       "icon": "build/icons"
     }
   },
