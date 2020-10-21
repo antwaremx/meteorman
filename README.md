@@ -24,6 +24,10 @@ A DDP Client with GUI
 
 Meteorman is The Postman of Meteor. Is a DDP Client with GUI
 
+### Preview 🎥
+
+![](example.gif)
+
 ### Supported Platforms 💻
 
 - macOS 🍎 ✅
