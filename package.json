@@ -1,6 +1,6 @@
 {
   "name": "Meteorman",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Antware",
   "description": "A DDP client with GUI",
   "license": "MIT",
