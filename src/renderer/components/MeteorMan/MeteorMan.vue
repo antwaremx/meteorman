@@ -65,7 +65,6 @@ export default {
         collectionName: null
       },
       methodResponse: '',
-      subscriptionResponse: '',
       isSubscriptionInProgress: null,
       connected: false,
       methodResponseParsed: '',
@@ -100,14 +99,12 @@ export default {
         await this.isSubscriptionInProgress.start();
         await this.isSubscriptionInProgress.ready();
         const firstResponse = this.$refs.serverRef.Meteor.collection(this.publication.collectionName).filter(e => e).fetch();
-        this.subscriptionResponse = JSON.stringify(firstResponse, undefined, 4);
         this.$refs.methodResponseRef.loadResponse(firstResponse);
         this.$refs.serverRef.Meteor.collection(this.publication.collectionName).filter(e => e).onChange(({ prev, next }) => {
-          this.subscriptionResponse = JSON.stringify(next, undefined, 4);
+          this.$refs.methodResponseRef.loadResponse(next);
         });
       } catch (exception) {
         console.error('subscription error: ', exception);
-        this.subscriptionResponse = JSON.stringify(exception, undefined, 4);
         this.$refs.methodResponseRef.loadResponse(exception);
       }
     },
