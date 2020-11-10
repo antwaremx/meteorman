@@ -26,7 +26,7 @@ Meteorman es el Postman de Meteor. Es un Cliente DDP con interfaz gráfica de us
 
 ### Demostración 🎥
 
-![](example.gif)
+![](example.png)
 
 
 ### Plataformas Soportadas 💻
