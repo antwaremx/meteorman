@@ -98,10 +98,12 @@ export default {
           }
         }
         this.isSubscriptionInProgress = this.$refs.serverRef.Meteor.subscribe(this.publication.name, ...args);
+        const initialTime = performance.now();
         await this.isSubscriptionInProgress.start();
         await this.isSubscriptionInProgress.ready();
+        const elapsedTime = performance.now() - initialTime;
         const firstResponse = this.$refs.serverRef.Meteor.collection(this.publication.collectionName).filter(e => e).fetch();
-        this.$refs.methodResponseRef.loadResponse(firstResponse);
+        this.$refs.methodResponseRef.loadResponse(firstResponse, elapsedTime);
         this.$refs.serverRef.Meteor.collection(this.publication.collectionName).filter(e => e).onChange(({ prev, next }) => {
           this.$refs.methodResponseRef.loadResponse(next);
         });
