@@ -41,12 +41,10 @@
           </template>
         </v-text-field>
         <v-text-field v-if="authentication.type !== 'none'" v-model="authentication.password" label="Password"
+                      :type="show ? 'text' : 'password'"
+                      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                      @click:append="show = !show"
                       dense outlined :disabled="Meteor.connected" class="mid-addon" background-color="#fafafa">
-          <template v-slot:append>
-            <v-btn icon @click="authentication.password = ''" tabindex="-1" class="pb-5">
-              <v-icon v-if="authentication.password">mdi-close</v-icon>
-            </v-btn>
-          </template>
         </v-text-field>
         <v-btn v-if="!Meteor.connected" @click="connect" height="40px" color="error" elevation="0" class="ml-2">
           Connect
@@ -114,6 +112,7 @@ export default {
   components: { ModalAccept },
   data() {
     return {
+      show: false,
       serverConnection: {
         protocol: 'ws',
         host: 'localhost',
