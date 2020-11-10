@@ -45,6 +45,7 @@
 import ServerConnection from '../ServerConnection/ServerConnection';
 import Arguments from './Arguments';
 import MethodResponse from './MethodResponse';
+const { performance } = require('perf_hooks');
 
 export default {
   name: 'MeteorMan', // TODO: Refactor the name of this component
@@ -76,14 +77,15 @@ export default {
       this.connected = value;
     },
     async callMethod(args) {
+      const initialTime = performance.now();
       try {
         this.methodResponseParsed = await this.$refs.serverRef.Meteor.call(this.meteorMethod.name, ...args);
-        this.$refs.methodResponseRef.loadResponse(this.methodResponseParsed);
+        this.$refs.methodResponseRef.loadResponse(this.methodResponseParsed, performance.now() - initialTime);
         this.methodResponse = JSON.stringify(this.methodResponseParsed, undefined, 4);
       } catch (exception) {
         console.error('meteor method error:', exception);
         this.methodResponseParsed = exception;
-        this.$refs.methodResponseRef.loadResponse(this.methodResponseParsed);
+        this.$refs.methodResponseRef.loadResponse(this.methodResponseParsed, performance.now() - initialTime);
         this.methodResponse = JSON.stringify(exception, undefined, 4);
       }
     },
