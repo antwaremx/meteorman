@@ -24,6 +24,11 @@ Cliente DDP con interfaz gráfica de usuario.
 
 Meteorman es el Postman de Meteor. Es un Cliente DDP con interfaz gráfica de usuario.
 
+### Demostración 🎥
+
+![](example.gif)
+
+
 ### Plataformas Soportadas 💻
 
 - macOS 🍎 ✅
@@ -34,9 +39,9 @@ Meteorman es el Postman de Meteor. Es un Cliente DDP con interfaz gráfica de us
 
 | Plataforma | Arquitectura    | Version | Enlace                                                                                                  |
 | ---------- | --------------- | ------- | ------------------------------------------------------------------------------------------------------- |
-| Windows    | x64             | 1.0.0   | [Download](https://github.com/antwaremx/meteorman/releases/download/v0.0.1/meteorman.windows.0.0.1.exe) |
-| Mac        | x64             | 1.0.0   | [Download](https://github.com/antwaremx/meteorman/releases/download/v0.0.1/meteorman.macOS.0.0.1.dmg).  |
-| Linux      | x86_x64         | 1.0.0   | [Download](https://github.com/antwaremx/meteorman)                                                      |
+| Windows    | x64             | 1.0.0   | [Download](https://github.com/antwaremx/meteorman/releases/download/v0.0.1/meteorman.Setup.0.0.1.exe).  |
+| Mac        | x64             | 1.0.0   | [Download](https://github.com/antwaremx/meteorman/releases/download/v0.0.1/meteorman-0.0.1.dmg)         |
+| Linux      | x64             | 1.0.0   | [Download](https://github.com/antwaremx/meteorman/releases/download/v0.0.1/Meteorman-1.0.0.AppImage)    |
 
 ## Para desarrolladores 🚀
 

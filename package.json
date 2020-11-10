@@ -1,12 +1,14 @@
 {
   "name": "Meteorman",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Antware",
   "description": "A DDP client with GUI",
-  "license": null,
+  "license": "MIT",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
+    "build-win": "node .electron-vue/build.js && electron-builder -w",
+    "build-linux": "node .electron-vue/build.js && electron-builder -l",
     "build:dir": "node .electron-vue/build.js && electron-builder --dir",
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
@@ -50,6 +52,7 @@
       "icon": "build/icons/icon.ico"
     },
     "linux": {
+      "category": "Utility",
       "icon": "build/icons"
     }
   },
@@ -93,7 +96,7 @@
     "del": "^3.0.0",
     "devtron": "^1.4.0",
     "electron": "^2.0.4",
-    "electron-builder": "^21.2.0",
+    "electron-builder": "^22.2.0",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.4",
     "file-loader": "^1.1.11",
