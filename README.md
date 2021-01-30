@@ -38,7 +38,7 @@ Meteorman is The Postman of Meteor. Is a DDP Client with GUI
 
 | Platform | Arch    | Version | Link                                                                                                              |
 | ---------- | --------------- | ------- | ------------------------------------------------------------------------------------------------------- |
-| Windows    | x64             | 1.1.1   | [Download](https://github.com/antwaremx/meteorman/releases/download/1.1.1/Meteorman-1.1.1.AppImage)   |
+| Windows    | x64             | 1.1.1   | [Download](https://github.com/antwaremx/meteorman/releases/download/1.1.1/Meteorman-1.1.1.exe)   |
 | Mac        | x64             | 1.1.1   | [Download](https://github.com/antwaremx/meteorman/releases/download/1.1.1/Meteorman-1.1.1.dmg)         |
 | Linux      | x64             | 1.1.1   | [Download](https://github.com/antwaremx/meteorman/releases/download/1.1.1/Meteorman-1.1.1.AppImage)    |
 
