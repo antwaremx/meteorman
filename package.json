@@ -58,7 +58,7 @@
     }
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "bufferutil": "^4.0.1",
     "isomorphic-ws": "^4.0.1",
     "json-tree-view": "^0.4.12",
@@ -74,7 +74,7 @@
     "vue-split-panel": "^1.0.4",
     "vuetify": "^2.3.14",
     "vuex": "^3.0.1",
-    "vuex-electron": "^1.0.0",
+    "vuex-electron": "^1.0.3",
     "ws": "^7.3.1"
   },
   "devDependencies": {
@@ -96,7 +96,7 @@
     "deepmerge": "^4.2.2",
     "del": "^3.0.0",
     "devtron": "^1.4.0",
-    "electron": "^2.0.4",
+    "electron": "^11.2.3",
     "electron-builder": "^22.2.0",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.4",
