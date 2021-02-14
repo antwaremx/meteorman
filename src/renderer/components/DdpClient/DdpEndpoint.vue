@@ -1,6 +1,23 @@
 <template>
   <div class="connection-wrapper">
     <v-row>
+      <v-col cols="12" md="12">
+        <div v-if="!editingDescription">
+          <a class="text-decoration-none text--accent-1" @click="editingDescription=true">
+            {{ !description.saved ? 'Add' : 'Edit' }} description
+          </a>
+          <markdown-it-vue-light class="md-body markdown-viewer" :content="description.saved"/>
+        </div>
+        <div v-else>
+          <vue-simplemde class="markdown-editor" v-model="description.current"/>
+          <div class="d-flex justify-end">
+            <v-btn small outlined color="error" class="mr-2" @click="cancelDescription">Cancel</v-btn>
+            <v-btn small outlined color="success" @click="saveDescription">Save</v-btn>
+          </div>
+        </div>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col class="d-flex">
         <div class="small-field">
           <v-select :items="dppTypes" v-model="typeSelected" dense outlined class="start-addon"
@@ -42,10 +59,12 @@
 import { performance } from 'perf_hooks';
 import MethodResponse from './MethodResponse';
 import Arguments from './Arguments';
+import MarkdownItVueLight from 'markdown-it-vue/dist/markdown-it-vue-light.umd.min.js';
+import 'markdown-it-vue/dist/markdown-it-vue-light.css';
 
 export default {
   name: 'DdpEndpoint',
-  components: { MethodResponse, Arguments },
+  components: { MethodResponse, Arguments, MarkdownItVueLight },
   props: ['connection'],
   data() {
     return {
@@ -66,7 +85,12 @@ export default {
       isSubscriptionInProgress: null,
       connected: false,
       methodResponseParsed: '',
-      defaultHeight: window.innerHeight - 288
+      defaultHeight: window.innerHeight - 288,
+      editingDescription: false,
+      description: {
+        saved: '',
+        current: null
+      }
     };
   },
   methods: {
@@ -140,13 +164,34 @@ export default {
       } else {
         this.subscribeToPublication(args);
       }
+    },
+    cancelDescription() {
+      this.description.current = this.description.saved;
+      this.editingDescription = false;
+    },
+    saveDescription() {
+      this.description.saved = this.description.current;
+      this.editingDescription = false;
     }
   }
 };
 </script>
-
 <style scoped>
 .connection-wrapper /deep/ .v-input__control {
   height: 40px;
+}
+
+.markdown-editor /deep/ code {
+  background-color: initial !important;
+  color: initial !important;
+  padding: initial !important;
+  border-radius: initial !important;
+  font-size: initial !important;
+  font-weight: initial !important;
+}
+
+.markdown-viewer /deep/ code {
+  color: initial !important;
+  font-weight: initial !important;
 }
 </style>
