@@ -1,70 +1,68 @@
 <template>
-  <div class="wrapper">
-    <app-bar/>
-    <v-card>
-      <v-tabs
-          v-model="tab"
-          center-active
-          next-icon="mdi-arrow-right-bold-box-outline"
-          prev-icon="mdi-arrow-left-bold-box-outline"
-          show-arrows
-      >
-        <v-tab
-            v-for="n in length"
-            :key="n"
-        >
-          DDP {{ n }}
-        </v-tab>
-        <v-menu bottom left>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-                icon
-                class="align-self-center mr-4"
-                v-bind="attrs"
-                v-on="on"
-                @click="length++"
-            >
-              <v-icon>
-                mdi-plus
-              </v-icon>
-            </v-btn>
-          </template>
-        </v-menu>
-      </v-tabs>
-
-      <v-tabs-items v-model="tab">
-        <v-tab-item v-for="n in length" :key="n">
-          <meteor-man/>
-        </v-tab-item>
-      </v-tabs-items>
-
-    </v-card>
-  </div>
+  <v-container fluid>
+    <server-connection ref="serverRef" @onUpdateConnection="updateConnection"></server-connection>
+    <v-tabs v-model="endpointTab">
+      <v-tab v-for="endpoint in endpoints" :key="endpoint.title">
+        {{ endpoint.title }}
+        <v-icon x-small right @click="removeEndpoint(endpoint)">
+          mdi-close
+        </v-icon>
+      </v-tab>
+      <v-btn icon class="align-self-center mr-4" @click="addEndpoint">
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </v-tabs>
+    <v-tabs-items v-model="endpointTab">
+      <v-tab-item v-for="endpoint in endpoints" :key="endpoint.title">
+        <ddp-endpoint v-bind:connection="$refs.serverRef"></ddp-endpoint>
+      </v-tab-item>
+    </v-tabs-items>
+  </v-container>
 </template>
 
 <script>
-import AppBar from '../components/AppBar/AppBar';
-import MeteorMan from '../components/MeteorMan/MeteorMan';
+import ServerConnection from '../components/ServerConnection/ServerConnection';
+import DdpEndpoint from '../components/DdpClient/DdpEndpoint';
 
 export default {
-  name: 'home',
-  components: { MeteorMan, AppBar },
+  name: 'Home',
+  components: { DdpEndpoint, ServerConnection },
   data() {
     return {
-      length: 1,
-      tab: 0
+      connected: false,
+      endpointTab: null,
+      endpoints: [
+        { title: 'Endpoint 1' }
+      ]
     };
   },
-  watch: {
-    length(val) {
-      this.tab = val - 1;
+  methods: {
+    updateConnection(value) {
+      this.connected = value;
+    },
+    removeEndpoint(connection) {
+      if (this.endpoints.length > 1) {
+        this.endpoints.splice(this.endpoints.indexOf(connection), 1);
+      }
+    },
+    addEndpoint() {
+      let i = 1;
+      let endpointName = 'Endpoint ' + i;
+      while (this.endpoints.find(endpoint => endpoint.title === endpointName)) {
+        i++;
+        endpointName = 'Endpoint ' + i;
+      }
+      this.endpoints.push({ title: endpointName });
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
 
+</style>
+
+<style>
 * {
   box-sizing: border-box;
   margin: 0;
@@ -75,10 +73,17 @@ export default {
   display: none;
 }
 
-.wrapper {
-  background-color: aliceblue;
-  height: 100vh;
-  width: 100vw;
+.tree-view-item-key {
+  color: #9e3731;
+  font-weight: normal;
+}
+
+.tree-view-item-value-string, .tree-view-item-value-boolean {
+  color: #2251a0;
+}
+
+.tree-view-item-value-number {
+  color: #3c845c;
 }
 
 </style>

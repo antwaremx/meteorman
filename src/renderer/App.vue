@@ -1,7 +1,7 @@
 <template>
-  <v-app id="app">
+  <v-app id="allPageView">
     <transition :name="$router.currentRoute.name">
-      <router-view></router-view>
+      <router-view name="allPageView"></router-view>
     </transition>
     <alert-message></alert-message>
     <loader></loader>
