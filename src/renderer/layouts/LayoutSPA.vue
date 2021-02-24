@@ -5,7 +5,7 @@
       <v-row>
         <v-col cols="12" md="12">
           <v-tabs v-model="connectionTab">
-            <v-tab v-for="ddp in connections" :key="ddp.title">
+            <v-tab v-for="ddp in ddpConnections" :key="ddp.title">
               {{ ddp.title }}
               <v-icon x-small right @click="removeDdpConnection(ddp)">
                 mdi-close
@@ -18,10 +18,10 @@
         </v-col>
       </v-row>
       <v-tabs-items v-model="connectionTab">
-        <v-tab-item v-for="ddp in connections" :key="ddp.title">
+        <v-tab-item v-for="ddp in ddpConnections" :key="ddp.title">
           <v-row>
             <v-col cols="12" md="3">
-              <aside-view id="aside"></aside-view>
+              <aside-view id="aside" v-bind:connection="ddp"></aside-view>
             </v-col>
             <v-col cols="12" md="9">
               <router-view id="section" name="sectionView"></router-view>
@@ -36,6 +36,9 @@
 <script>
 import HeaderView from './shared/HeaderView';
 import AsideView from './shared/AsideView';
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapState, mapMutations } = createNamespacedHelpers('connections');
 
 export default {
   name: 'LayoutSPA',
@@ -44,26 +47,24 @@ export default {
     AsideView
   },
   data: () => ({
-    length: 5,
     connectionTab: null,
     connections: [
-      { title: 'Connection 1' }
+      { title: 'Connection 1', collections: [] }
     ]
   }),
+  beforeMount() {
+    this.initializeConnections();
+  },
+  computed: {
+    ...mapState(['ddpConnections'])
+  },
   methods: {
-    removeDdpConnection(connection) {
-      if (this.connections.length > 1) {
-        this.connections.splice(this.connections.indexOf(connection), 1);
-      }
-    },
+    ...mapMutations(['initializeConnections', 'addConnection', 'removeConnection']),
     addDdpConnection() {
-      let i = 1;
-      let connectionName = 'Connection ' + i;
-      while (this.connections.find(connection => connection.title === connectionName)) {
-        i++;
-        connectionName = 'Connection ' + i;
-      }
-      this.connections.push({ title: connectionName });
+      this.addConnection();
+    },
+    removeDdpConnection(connection) {
+      this.removeConnection(connection.title);
     }
   }
 };

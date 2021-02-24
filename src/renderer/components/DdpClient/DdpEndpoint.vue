@@ -42,6 +42,7 @@
           Send
           <v-icon right small>mdi-send</v-icon>
         </v-btn>
+        <save-endpoint></save-endpoint>
       </v-col>
     </v-row>
     <Split style="height: calc(100vh - 250px);" direction="vertical">
@@ -61,10 +62,11 @@ import MethodResponse from './MethodResponse';
 import Arguments from './Arguments';
 import MarkdownItVueLight from 'markdown-it-vue/dist/markdown-it-vue-light.umd.min.js';
 import 'markdown-it-vue/dist/markdown-it-vue-light.css';
+import SaveEndpoint from '../Collections/SaveEndpoint';
 
 export default {
   name: 'DdpEndpoint',
-  components: { MethodResponse, Arguments, MarkdownItVueLight },
+  components: { SaveEndpoint, MethodResponse, Arguments, MarkdownItVueLight },
   props: ['connection'],
   data() {
     return {
@@ -179,15 +181,6 @@ export default {
 <style scoped>
 .connection-wrapper /deep/ .v-input__control {
   height: 40px;
-}
-
-.markdown-editor /deep/ code {
-  background-color: initial !important;
-  color: initial !important;
-  padding: initial !important;
-  border-radius: initial !important;
-  font-size: initial !important;
-  font-weight: initial !important;
 }
 
 .markdown-viewer /deep/ code {

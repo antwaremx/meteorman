@@ -4,8 +4,10 @@
  */
 
 import dragAndDrop from './DragAndDrop';
+import connections from './Connections';
 
 const modules = {};
 
 modules.dragAndDrop = dragAndDrop;
+modules.connections = connections;
 export default modules;
