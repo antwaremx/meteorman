@@ -30,10 +30,19 @@ const removeCollectionOfConnection = (state, { connectionName, collectionIndex }
 		.collections.splice(collectionIndex, 1);
 };
 
+//Collection operations
+
+const addElementToCollection = (state, { connectionName, collectionName, element }) => {
+	state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName)
+		.collections.find(collection => collection.name === collectionName)
+		.children.push(element);
+};
+
 export {
 	initializeConnections,
 	addConnection,
 	removeConnection,
 	addCollectionToConnection,
-	removeCollectionOfConnection
+	removeCollectionOfConnection,
+	addElementToCollection
 };

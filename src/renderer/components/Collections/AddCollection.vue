@@ -26,7 +26,8 @@ export default {
     return {
       collection: {
         name: null,
-        description: null
+        description: null,
+        children: []
       }
     };
   },
@@ -54,7 +55,8 @@ export default {
     resetForm() {
       this.collection = {
         name: null,
-        description: null
+        description: null,
+        children: []
       };
     }
   }

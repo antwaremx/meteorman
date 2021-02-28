@@ -12,15 +12,18 @@
       <v-treeview v-model="tree" :open="initiallyOpen" :items="connection.collections"
                   activatable item-key="name" dense open-on-click>
         <template v-slot:prepend="{ item, open }">
-          <v-icon v-if="!item.icon">
-            mdi-folder-table
+          <v-icon v-if="item.type==='folder'">
+            {{ icons[item.type] }}
+          </v-icon>
+          <v-icon v-else-if="item.type==='endpoint'">
+            {{ icons[item.endpointType] }}
           </v-icon>
           <v-icon v-else>
-            {{ icons[item.icon] }}
+            mdi-folder-table
           </v-icon>
         </template>
         <template v-slot:append="{item}">
-          <v-icon small @click="removeCollection(item.name)" right>mdi-close</v-icon>
+          <collection-options :connection="connection" :element="item"></collection-options>
         </template>
       </v-treeview>
     </v-row>
@@ -29,20 +32,22 @@
 
 <script>
 import AddCollection from '../../components/Collections/AddCollection';
-import { createNamespacedHelpers } from 'vuex';
+import CollectionOptions from '../../components/Collections/CollectionOptions';
 
+import { createNamespacedHelpers } from 'vuex';
 const { mapMutations } = createNamespacedHelpers('connections');
 
 export default {
   name: 'AsideView',
-  components: { AddCollection },
+  components: { CollectionOptions, AddCollection },
   props: ['connection'],
   data: () => ({
     initiallyOpen: ['public'],
     icons: {
       method: 'mdi-alpha-m-circle-outline',
       publication: 'mdi-alpha-p-circle-outline',
-      collection: 'mdi-folder-table'
+      collection: 'mdi-folder-table',
+      folder: 'mdi-folder',
     },
     tree: [],
     collections: [
@@ -64,14 +69,7 @@ export default {
         icon: 'collection'
       }
     ]
-  }),
-  methods: {
-    ...mapMutations(['removeCollectionOfConnection']),
-    removeCollection(collectionName) {
-      const collectionIndex = this.connection.collections.findIndex(collection => collection.name === collectionName);
-      this.removeCollectionOfConnection({ connectionName: this.connection.title, collectionIndex });
-    }
-  }
+  })
 };
 </script>
 
