@@ -70,29 +70,54 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['removeCollectionOfConnection', 'addElementToCollection']),
+    ...mapMutations(['removeCollectionOfConnection', 'addElementToCollection', 'addElementToFolder',
+      'removeElementFromCollection']),
     editCollection() {
       console.log('Edit collection');
     },
+    getFolderNames() {
+      let itemInCollection = this.$parent;
+      let folderNames = [itemInCollection.key];
+      while (itemInCollection.level !== 0) {
+        itemInCollection = itemInCollection.$parent;
+        folderNames.unshift(itemInCollection.key);
+      }
+      return folderNames;
+    },
+    validateElementName(name, type) {
+      const elementExists = this.element.children.find(el => el.name === name && el.type === type);
+      if (!!elementExists) {
+        this.$alert.showAlertSimple('error', 'Name already exists');
+      }
+      return !elementExists;
+    },
+    addElement(element) {
+      if (this.$parent.level === 0) {
+        this.addElementToCollection({
+          connectionName: this.connection.title,
+          collectionName: this.element.name,
+          element
+        });
+      } else {
+        const folderNames = this.getFolderNames();
+        const collectionName = folderNames.shift();
+        this.addElementToFolder({
+          connectionName: this.connection.title,
+          collectionName,
+          folderNames,
+          element
+        });
+      }
+    },
     openAddFolderModal() {
-      console.log('name of element: ', this.$parent.key);
-      console.log('level of element: ', this.$parent.level);
-      console.log('name of parent: ', this.$parent.$parent.key);
-      console.log('level of parent: ', this.$parent.$parent.level);
       this.$refs.addFolderRef.title = `Add folder to ${ this.element.name } collection`;
       this.$refs.addFolderRef.dialog = true;
     },
     addFolder() {
-      console.log('Add folder');
-      console.log('collection: ', this.element);
       const folder = { ...this.folder };
-      //TODO: Validate existing name of folder
-      this.addElementToCollection({
-        connectionName: this.connection.title,
-        collectionName: this.element.name,
-        element: folder
-      });
-      //TODO: Reset form of folder
+      if (this.validateElementName(folder.name, folder.type)) {
+        this.addElement(folder);
+      }
       this.folder = {
         name: null,
         type: 'folder',
@@ -104,14 +129,10 @@ export default {
       this.$refs.addEndpointRef.dialog = true;
     },
     addEndpoint() {
-      console.log('Add endpoint');
       const endpoint = { ...this.endpoint };
-      //TODO: Validate existing name of endpoint
-      this.addElementToCollection({
-        connectionName: this.connection.title,
-        collectionName: this.element.name,
-        element: endpoint
-      });
+      if (this.validateElementName(endpoint.name, endpoint.type)) {
+        this.addElement(endpoint);
+      }
       this.endpoint = {
         type: 'endpoint',
         name: null,
@@ -123,9 +144,21 @@ export default {
       console.log('Export collection');
     },
     removeCollection() {
-      console.log('remove collection: ', this.element);
-      const collectionIndex = this.connection.collections.findIndex(collection => collection.name === this.element.name);
-      this.removeCollectionOfConnection({ connectionName: this.connection.title, collectionIndex });
+      if (this.$parent.level === 0) {
+        const collectionIndex = this.connection.collections.findIndex(collection => collection.name === this.element.name);
+        this.removeCollectionOfConnection({ connectionName: this.connection.title, collectionIndex });
+      } else {
+        const itemNames = this.getFolderNames();
+        itemNames.pop();
+        const collectionName = itemNames.shift();
+        const element = { ...this.element };
+        this.removeElementFromCollection({
+          connectionName: this.connection.title,
+          collectionName,
+          itemNames,
+          element
+        });
+      }
     }
   }
 };

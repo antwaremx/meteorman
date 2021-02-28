@@ -38,11 +38,33 @@ const addElementToCollection = (state, { connectionName, collectionName, element
 		.children.push(element);
 };
 
+const addElementToFolder = (state, { connectionName, collectionName, folderNames, element }) => {
+	let folder = state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName)
+		.collections.find(collection => collection.name === collectionName);
+
+	for (let folderLevel = 0; folderLevel < folderNames.length; folderLevel++) {
+		folder = folder.children.find(child => child.type === 'folder' && child.name === folderNames[folderLevel]);
+	}
+	folder.children.push(element);
+};
+
+const removeElementFromCollection = (state, { connectionName, collectionName, itemNames, element }) => {
+	let item = state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName)
+		.collections.find(collection => collection.name === collectionName);
+	for (let itemLevel = 0; itemLevel < itemNames.length; itemLevel++) {
+		item = item.children.find(child => child.type === 'folder' && child.name === itemNames[itemLevel]);
+	}
+	const elementIndex = item.children.findIndex(child => child.type === element.type && child.name === element.name);
+	item.children.splice(elementIndex, 1);
+};
+
 export {
 	initializeConnections,
 	addConnection,
 	removeConnection,
 	addCollectionToConnection,
 	removeCollectionOfConnection,
-	addElementToCollection
+	addElementToCollection,
+	addElementToFolder,
+	removeElementFromCollection
 };
