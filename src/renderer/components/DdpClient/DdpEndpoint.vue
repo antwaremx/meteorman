@@ -4,9 +4,9 @@
       <v-col cols="12" md="12">
         <div v-if="!editingDescription">
           <a class="text-decoration-none text--accent-1" @click="editingDescription=true">
-            {{ !description.saved ? 'Add' : 'Edit' }} description
+            {{ !endpoint.description ? 'Add' : 'Edit' }} description
           </a>
-          <markdown-it-vue-light class="md-body markdown-viewer" :content="description.saved"/>
+          <markdown-it-vue-light class="md-body markdown-viewer" :content="endpoint.description || ''"/>
         </div>
         <div v-else>
           <vue-simplemde class="markdown-editor" v-model="description.current"/>
@@ -21,10 +21,11 @@
       <v-col class="d-flex">
         <div class="small-field">
           <v-select :items="dppTypes" v-model="typeSelected" dense outlined class="start-addon"
+                    item-text="name" item-value="key"
                     background-color="#ececec"/>
         </div>
-        <v-text-field v-if="typeSelected==='Method'" placeholder="Enter method name" class="end-addon"
-                      background-color="#ececec"
+        <v-text-field v-if="typeSelected==='method'" placeholder="Enter method name" class="end-addon"
+                      background-color="#ececec" @blur="saveNameOfEndpoint(meteorMethod.name,'method')"
                       v-model="meteorMethod.name" dense outlined type="text">
           <template v-slot:append>
             <v-btn icon @click="meteorMethod.name = ''" tabindex="-1" class="pb-5">
@@ -33,10 +34,10 @@
           </template>
         </v-text-field>
         <v-text-field v-else placeholder="Enter publication name" class="mid-addon"
-                      background-color="#ececec"
+                      background-color="#ececec" @blur="saveNameOfEndpoint(publication.name,'publication')"
                       v-model="publication.name" dense outlined clearable type="text"/>
-        <v-text-field v-if="typeSelected==='Subscription'" placeholder="Enter collection name" class="end-addon"
-                      background-color="#ececec"
+        <v-text-field v-if="typeSelected==='publication'" placeholder="Enter collection name" class="end-addon"
+                      background-color="#ececec" @blur="saveCollectionNameOfPublication"
                       v-model="publication.collectionName" dense outlined clearable type="text"/>
         <v-btn v-on:click="ddp()" class="ml-2" color="#387be5" dark elevation="0" height="40px">
           Send
@@ -47,7 +48,7 @@
     </v-row>
     <Split style="height: calc(100vh - 250px);" direction="vertical">
       <SplitArea>
-        <arguments ref="argsRef"></arguments>
+        <arguments ref="argsRef" v-bind:connection="ddpConnection" v-bind:endpoint="endpoint"></arguments>
       </SplitArea>
       <SplitArea>
         <method-response ref="methodResponseRef"></method-response>
@@ -63,18 +64,21 @@ import Arguments from './Arguments';
 import MarkdownItVueLight from 'markdown-it-vue/dist/markdown-it-vue-light.umd.min.js';
 import 'markdown-it-vue/dist/markdown-it-vue-light.css';
 import SaveEndpoint from '../Collections/SaveEndpoint';
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapMutations } = createNamespacedHelpers('connections');
 
 export default {
   name: 'DdpEndpoint',
   components: { SaveEndpoint, MethodResponse, Arguments, MarkdownItVueLight },
-  props: ['connection'],
+  props: ['connection', 'ddpConnection', 'endpoint'],
   data() {
     return {
       dppTypes: [
-        'Method',
-        'Subscription'
+        { name: 'Method', key: 'method' },
+        { name: 'Subscription', key: 'publication' }
       ],
-      typeSelected: 'Method',
+      typeSelected: 'method',
       meteorMethod: {
         name: null,
         args: null
@@ -90,12 +94,22 @@ export default {
       defaultHeight: window.innerHeight - 288,
       editingDescription: false,
       description: {
-        saved: '',
         current: null
       }
     };
   },
+  beforeMount() {
+    this.description.current = this.endpoint.description;
+    this.typeSelected = this.endpoint.endpointType || 'method';
+    if (this.endpoint.endpointType === 'method') {
+      this.meteorMethod.name = this.endpoint.name;
+    } else {
+      this.publication.name = this.endpoint.name;
+      this.publication.collectionName = this.endpoint.collection;
+    }
+  },
   methods: {
+    ...mapMutations(['saveDescriptionOfOpenEndpoint', 'saveNameOfOpenEndpoint', 'saveCollectionNameOfOpenEndpoint']),
     updateConnection(value) {
       this.connected = value;
     },
@@ -161,19 +175,38 @@ export default {
     },
     ddp() {
       const args = this.loadArguments(this.$refs.argsRef.args);
-      if (this.typeSelected === 'Method') {
+      if (this.typeSelected === 'method') {
         this.callMethod(args);
       } else {
         this.subscribeToPublication(args);
       }
     },
     cancelDescription() {
-      this.description.current = this.description.saved;
+      this.description.current = this.endpoint.description;
       this.editingDescription = false;
     },
     saveDescription() {
-      this.description.saved = this.description.current;
+      this.saveDescriptionOfOpenEndpoint({
+        connectionName: this.ddpConnection.title,
+        openEndpointName: this.endpoint.title,
+        description: this.description.current
+      });
       this.editingDescription = false;
+    },
+    saveNameOfEndpoint(name, endpointType) {
+      this.saveNameOfOpenEndpoint({
+        connectionName: this.ddpConnection.title,
+        openEndpointName: this.endpoint.title,
+        name,
+        endpointType
+      });
+    },
+    saveCollectionNameOfPublication() {
+      this.saveCollectionNameOfOpenEndpoint({
+        connectionName: this.ddpConnection.title,
+        openEndpointName: this.endpoint.title,
+        collectionName: this.publication.collectionName
+      });
     }
   }
 };

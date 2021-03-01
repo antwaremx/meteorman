@@ -24,7 +24,7 @@
               <aside-view id="aside" v-bind:connection="ddp"></aside-view>
             </v-col>
             <v-col cols="12" md="9">
-              <router-view id="section" name="sectionView"></router-view>
+              <router-view id="section" v-bind:connection="ddp" name="sectionView"></router-view>
             </v-col>
           </v-row>
         </v-tab-item>
@@ -47,10 +47,7 @@ export default {
     AsideView
   },
   data: () => ({
-    connectionTab: null,
-    connections: [
-      { title: 'Connection 1', collections: [] }
-    ]
+    connectionTab: null
   }),
   beforeMount() {
     this.initializeConnections();

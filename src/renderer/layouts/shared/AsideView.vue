@@ -13,7 +13,7 @@
                   activatable item-key="name" dense open-on-click>
         <template v-slot:prepend="{ item, open }">
           <v-icon v-if="item.type==='folder'">
-            {{ icons[item.type] }}
+            {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
           </v-icon>
           <v-icon v-else-if="item.type==='endpoint'">
             {{ icons[item.endpointType] }}
