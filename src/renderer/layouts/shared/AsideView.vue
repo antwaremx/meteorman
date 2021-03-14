@@ -34,9 +34,6 @@
 import AddCollection from '../../components/Collections/AddCollection';
 import CollectionOptions from '../../components/Collections/CollectionOptions';
 
-import { createNamespacedHelpers } from 'vuex';
-const { mapMutations } = createNamespacedHelpers('connections');
-
 export default {
   name: 'AsideView',
   components: { CollectionOptions, AddCollection },
@@ -49,26 +46,7 @@ export default {
       collection: 'mdi-folder-table',
       folder: 'mdi-folder',
     },
-    tree: [],
-    collections: [
-      {
-        name: 'public',
-        children: [
-          {
-            name: 'player.signup',
-            icon: 'method'
-          },
-          {
-            name: 'verificationCode.generate',
-            icon: 'publication'
-          }
-        ]
-      },
-      {
-        name: 'Users',
-        icon: 'collection'
-      }
-    ]
+    tree: []
   })
 };
 </script>

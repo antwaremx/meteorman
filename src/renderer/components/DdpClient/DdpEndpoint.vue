@@ -43,7 +43,22 @@
           Send
           <v-icon right small>mdi-send</v-icon>
         </v-btn>
-        <save-endpoint></save-endpoint>
+        <div>
+          <v-btn class="ml-2" color="primary" outlined elevation="0" height="40px" @click="openSaveEndpoint">Save
+          </v-btn>
+          <modal-question ref="saveEndpointRef" @onAccept="saveEndpoint">
+            <v-text-field v-if="typeSelected==='method'"
+                          @blur="saveNameOfEndpoint(meteorMethod.name,'method')"
+                          v-model="meteorMethod.name" label="Endpoint name" outlined
+                          dense></v-text-field>
+            <v-text-field v-else v-model="publication.name"
+                          @blur="saveNameOfEndpoint(publication.name,'publication')"
+                          label="Endpoint name" outlined dense></v-text-field>
+            <vue-simplemde v-model="description.current" :configs="{placeholder:'Endpoint description (Optional)'}"
+                           class="markdown-editor"/>
+            <select-collection-or-folder v-bind:connection="ddpConnection"></select-collection-or-folder>
+          </modal-question>
+        </div>
       </v-col>
     </v-row>
     <Split style="height: calc(100vh - 250px);" direction="vertical">
@@ -65,12 +80,14 @@ import MarkdownItVueLight from 'markdown-it-vue/dist/markdown-it-vue-light.umd.m
 import 'markdown-it-vue/dist/markdown-it-vue-light.css';
 import SaveEndpoint from '../Collections/SaveEndpoint';
 import { createNamespacedHelpers } from 'vuex';
+import ModalQuestion from '../Utilities/Modals/ModalQuestion';
+import SelectCollectionOrFolder from '../Collections/SelectCollectionOrFolder';
 
 const { mapMutations } = createNamespacedHelpers('connections');
 
 export default {
   name: 'DdpEndpoint',
-  components: { SaveEndpoint, MethodResponse, Arguments, MarkdownItVueLight },
+  components: { SelectCollectionOrFolder, ModalQuestion, SaveEndpoint, MethodResponse, Arguments, MarkdownItVueLight },
   props: ['connection', 'ddpConnection', 'endpoint'],
   data() {
     return {
@@ -207,6 +224,13 @@ export default {
         openEndpointName: this.endpoint.title,
         collectionName: this.publication.collectionName
       });
+    },
+    openSaveEndpoint() {
+      this.$refs.saveEndpointRef.title = 'Save endpoint request';
+      this.$refs.saveEndpointRef.dialog = true;
+    },
+    saveEndpoint() {
+
     }
   }
 };
