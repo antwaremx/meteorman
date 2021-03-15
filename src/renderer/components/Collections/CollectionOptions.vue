@@ -62,6 +62,7 @@ export default {
         children: []
       },
       endpoint: {
+        args: [],
         type: 'endpoint',
         name: null,
         description: null,
@@ -77,10 +78,10 @@ export default {
     },
     getFolderNames() {
       let itemInCollection = this.$parent;
-      let folderNames = [itemInCollection.key];
+      let folderNames = [itemInCollection.text];
       while (itemInCollection.level !== 0) {
         itemInCollection = itemInCollection.$parent;
-        folderNames.unshift(itemInCollection.key);
+        folderNames.unshift(itemInCollection.text);
       }
       return folderNames;
     },
@@ -134,6 +135,7 @@ export default {
         this.addElement(endpoint);
       }
       this.endpoint = {
+        args: [],
         type: 'endpoint',
         name: null,
         description: null,

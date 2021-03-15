@@ -24,7 +24,10 @@ const removeConnection = (state, connectionName) => {
 };
 
 const addCollectionToConnection = (state, { connectionName, collection }) => {
-	state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName).collections.push(collection);
+	state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName).collections.push({
+		...collection,
+		id: collection.name
+	});
 };
 
 const removeCollectionOfConnection = (state, { connectionName, collectionIndex }) => {
@@ -37,17 +40,22 @@ const removeCollectionOfConnection = (state, { connectionName, collectionIndex }
 const addElementToCollection = (state, { connectionName, collectionName, element }) => {
 	state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName)
 		.collections.find(collection => collection.name === collectionName)
-		.children.push(element);
+		.children.push({ ...element, id: `${ collectionName }-${ element.name }` });
 };
 
 const addElementToFolder = (state, { connectionName, collectionName, folderNames, element }) => {
 	let folder = state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName)
 		.collections.find(collection => collection.name === collectionName);
-
+	let folderIndexes = [];
 	for (let folderLevel = 0; folderLevel < folderNames.length; folderLevel++) {
-		folder = folder.children.find(child => child.type === 'folder' && child.name === folderNames[folderLevel]);
+		const folderIndex = folder.children.findIndex(child => child.type === 'folder' && child.name === folderNames[folderLevel]);
+		folderIndexes.push(folderIndex);
+		folder = folder.children[folderIndex];
 	}
-	folder.children.push(element);
+	folder.children.push({
+		...element,
+		id: `${ collectionName }-${ folderIndexes.toString().replaceAll(',', '') }-${ element.name }`
+	});
 };
 
 const removeElementFromCollection = (state, { connectionName, collectionName, itemNames, element }) => {
@@ -56,7 +64,7 @@ const removeElementFromCollection = (state, { connectionName, collectionName, it
 	for (let itemLevel = 0; itemLevel < itemNames.length; itemLevel++) {
 		item = item.children.find(child => child.type === 'folder' && child.name === itemNames[itemLevel]);
 	}
-	const elementIndex = item.children.findIndex(child => child.type === element.type && child.name === element.name);
+	const elementIndex = item.children.findIndex(child => child.id === element.id);
 	item.children.splice(elementIndex, 1);
 };
 
@@ -65,7 +73,7 @@ const removeElementFromCollection = (state, { connectionName, collectionName, it
 const initializeOpenEndpoints = (state, { connectionName }) => {
 	const connection = state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName);
 	if (!connection.openEndpoints.length) {
-		connection.openEndpoints.push({ title: 'Endpoint 1', description: null, args: [] });
+		connection.openEndpoints.push({ id: 'endpoint-1', title: 'Endpoint 1', description: null, args: [] });
 	}
 };
 
@@ -77,54 +85,70 @@ const addOpenEndpointToConnection = (state, { connectionName }) => {
 		i++;
 		endpointName = 'Endpoint ' + i;
 	}
-	connection.openEndpoints.push({ title: endpointName, description: null, args: [] });
+	const id = 'endpoint-' + i;
+	connection.openEndpoints.push({ id, title: endpointName, description: null, args: [] });
 };
 
-const removeOpenEndpointOfConnection = (state, { connectionName, openEndpointName }) => {
+const removeOpenEndpointOfConnection = (state, { connectionName, openEndpointId }) => {
 	const connection = state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName);
 	if (connection.openEndpoints.length > 1) {
-		const endpointIndex = connection.openEndpoints.findIndex(openEndpoint => openEndpoint.title === openEndpointName);
+		const endpointIndex = connection.openEndpoints.findIndex(openEndpoint => openEndpoint.id === openEndpointId);
 		connection.openEndpoints.splice(endpointIndex, 1);
 	}
 };
 
-const saveDescriptionOfOpenEndpoint = (state, { connectionName, openEndpointName, description }) => {
+const saveDescriptionOfOpenEndpoint = (state, { connectionName, openEndpointId, description }) => {
 	const connection = state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName);
-	connection.openEndpoints.find(endpoint => endpoint.title === openEndpointName).description = description;
+	connection.openEndpoints.find(endpoint => endpoint.id === openEndpointId).description = description;
 };
 
-const saveNameOfOpenEndpoint = (state, { connectionName, openEndpointName, name, endpointType }) => {
+const saveNameOfOpenEndpoint = (state, { connectionName, openEndpointId, name, endpointType }) => {
 	const connection = state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName);
-	const endpoint = connection.openEndpoints.find(endpoint => endpoint.title === openEndpointName);
+	const endpoint = connection.openEndpoints.find(endpoint => endpoint.id === openEndpointId);
 	endpoint.name = name;
 	endpoint.endpointType = endpointType;
 };
 
-const saveCollectionNameOfOpenEndpoint = (state, { connectionName, openEndpointName, collectionName }) => {
+const saveCollectionNameOfOpenEndpoint = (state, { connectionName, openEndpointId, collectionName }) => {
 	const connection = state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName);
-	const endpoint = connection.openEndpoints.find(endpoint => endpoint.title === openEndpointName);
+	const endpoint = connection.openEndpoints.find(endpoint => endpoint.id === openEndpointId);
 	endpoint.collection = collectionName;
 };
 
-const saveArgOfOpenEndpoint = (state, { connectionName, openEndpointName, index, arg }) => {
+const saveArgOfOpenEndpoint = (state, { connectionName, openEndpointId, index, arg }) => {
 	const connection = state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName);
-	const endpoint = connection.openEndpoints.find(endpoint => endpoint.title === openEndpointName);
+	const endpoint = connection.openEndpoints.find(endpoint => endpoint.id === openEndpointId);
 	endpoint.args[index] = arg;
 };
 
-const removeArgOfOpenEndpoint = (state, { connectionName, openEndpointName, argIndex }) => {
+const removeArgOfOpenEndpoint = (state, { connectionName, openEndpointId, argIndex }) => {
 	const connection = state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName);
-	const endpoint = connection.openEndpoints.find(endpoint => endpoint.title === openEndpointName);
+	const endpoint = connection.openEndpoints.find(endpoint => endpoint.id === openEndpointId);
 	endpoint.args.splice(argIndex, 1);
 };
 
 const saveOpenEndpointInCollection = (state, { connectionName, openEndpoint, indexesByFolder }) => {
 	const connection = state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName);
 	let folder = connection.collections[indexesByFolder.shift()];
+	const collectionName = folder.name;
+	let folderIndexes = [];
 	for (let folderIndex of indexesByFolder) {
 		folder = folder.children[folderIndex];
+		folderIndexes.push(folderIndex);
 	}
-	folder.children.push({ ...openEndpoint, type: 'endpoint' });
+	const folderIndexesString = folderIndexes.toString().replaceAll(',', '');
+	folder.children.push({
+		...openEndpoint,
+		type: 'endpoint',
+		id: `${ collectionName }-${ indexesByFolder.length ? (folderIndexesString + '-') : '' }${ openEndpoint.name }`
+	});
+};
+
+const openEndpointFromCollection = (state, { connectionName, endpoint }) => {
+	const connection = state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName);
+	if (!connection.openEndpoints.find(openEndpoint => openEndpoint.id === endpoint.id)) {
+		connection.openEndpoints.push({ ...endpoint, title: endpoint.name });
+	}
 };
 
 export {
@@ -144,5 +168,6 @@ export {
 	saveCollectionNameOfOpenEndpoint,
 	saveArgOfOpenEndpoint,
 	removeArgOfOpenEndpoint,
-	saveOpenEndpointInCollection
+	saveOpenEndpointInCollection,
+	openEndpointFromCollection
 };

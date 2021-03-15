@@ -215,7 +215,7 @@ export default {
     saveDescription() {
       this.saveDescriptionOfOpenEndpoint({
         connectionName: this.ddpConnection.title,
-        openEndpointName: this.endpoint.title,
+        openEndpointId: this.endpoint.id,
         description: this.description.current
       });
       this.editingDescription = false;
@@ -223,7 +223,7 @@ export default {
     saveNameOfEndpoint(name, endpointType) {
       this.saveNameOfOpenEndpoint({
         connectionName: this.ddpConnection.title,
-        openEndpointName: this.endpoint.title,
+        openEndpointId: this.endpoint.id,
         name,
         endpointType
       });
@@ -231,7 +231,7 @@ export default {
     saveCollectionNameOfPublication() {
       this.saveCollectionNameOfOpenEndpoint({
         connectionName: this.ddpConnection.title,
-        openEndpointName: this.endpoint.title,
+        openEndpointId: this.endpoint.id,
         collectionName: this.publication.collectionName
       });
     },

@@ -2,7 +2,7 @@
   <v-container fluid>
     <server-connection ref="serverRef" @onUpdateConnection="updateConnection"></server-connection>
     <v-tabs v-model="endpointTab">
-      <v-tab v-for="endpoint in connection.openEndpoints" :key="endpoint.title">
+      <v-tab v-for="endpoint in connection.openEndpoints" :key="endpoint.id">
         {{ endpoint.title }}
         <v-icon x-small right @click="removeEndpoint(endpoint)">
           mdi-close
@@ -13,7 +13,7 @@
       </v-btn>
     </v-tabs>
     <v-tabs-items v-model="endpointTab">
-      <v-tab-item v-for="endpoint in connection.openEndpoints" :key="endpoint.title">
+      <v-tab-item v-for="endpoint in connection.openEndpoints" :key="endpoint.id">
         <ddp-endpoint v-bind:connection="$refs.serverRef" v-bind:ddpConnection="connection"
                       v-bind:endpoint="endpoint"></ddp-endpoint>
       </v-tab-item>
@@ -38,6 +38,12 @@ export default {
       endpointTab: null
     };
   },
+  beforeCreate() {
+    this.$root.$on('updateSelectedTab', (data) => {
+      //TODO: Validate only for current connection
+      this.endpointTab = this.connection.openEndpoints.findIndex(openEndpoint => openEndpoint.id === data.id);
+    });
+  },
   beforeMount() {
     this.initializeOpenEndpoints({ connectionName: this.connection.title });
   },
@@ -51,7 +57,7 @@ export default {
       this.addOpenEndpointToConnection({ connectionName: this.connection.title });
     },
     removeEndpoint(endpoint) {
-      this.removeOpenEndpointOfConnection({ connectionName: this.connection.title, openEndpointName: endpoint.title });
+      this.removeOpenEndpointOfConnection({ connectionName: this.connection.title, openEndpointId: endpoint.id });
     }
   }
 };

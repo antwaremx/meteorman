@@ -9,8 +9,8 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-treeview v-model="tree" ref="treeViewRef" :items="connection.collections" activatable item-key="name" dense
-                  open-on-click @update:active="activeItems">
+      <v-treeview v-model="tree" :items="connection.collections" activatable item-key="id" dense
+                  return-object open-on-click @update:active="activeItem">
         <template v-slot:prepend="{ item, open }">
           <v-icon v-if="item.type==='folder'">
             {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
@@ -33,6 +33,9 @@
 <script>
 import AddCollection from '../../components/Collections/AddCollection';
 import CollectionOptions from '../../components/Collections/CollectionOptions';
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapMutations } = createNamespacedHelpers('connections');
 
 export default {
   name: 'AsideView',
@@ -47,14 +50,18 @@ export default {
     },
     tree: []
   }),
-  mounted() {
-    console.log('activeCache: ',this.$refs.treeViewRef.activeCache);
-    console.log('activeCache size: ',this.$refs.treeViewRef.activeCache.size);
-    console.log('type activeCache: ',typeof this.$refs.treeViewRef.activeCache);
-  },
-  methods:{
-    activeItems(items){
-      console.log('activeItems: ', items);
+  methods: {
+    ...mapMutations(['openEndpointFromCollection']),
+    activeItem(item) {
+      const itemSelected = item[0];
+      console.log('activeItem: ', itemSelected);
+      if (itemSelected && itemSelected.type === 'endpoint') {
+        this.openEndpointFromCollection({
+          connectionName: this.connection.title,
+          endpoint: itemSelected
+        });
+        this.$root.$emit('updateSelectedTab', { ...itemSelected });
+      }
     }
   }
 };

@@ -120,7 +120,7 @@ export default {
       this.args.splice(index, 1);
       this.removeArgOfOpenEndpoint({
         connectionName: this.connection.title,
-        openEndpointName: this.endpoint.title,
+        openEndpointId: this.endpoint.id,
         argIndex: index
       });
     },
@@ -129,7 +129,7 @@ export default {
         const arg = JSON.parse(JSON.stringify(this.args[index]));
         this.saveArgOfOpenEndpoint({
           connectionName: this.connection.title,
-          openEndpointName: this.endpoint.title,
+          openEndpointId: this.endpoint.id,
           index,
           arg
         });
@@ -139,7 +139,7 @@ export default {
       const arg = JSON.parse(JSON.stringify(this.args[index]));
       this.saveArgOfOpenEndpoint({
         connectionName: this.connection.title,
-        openEndpointName: this.endpoint.title,
+        openEndpointId: this.endpoint.id,
         index,
         arg
       });
