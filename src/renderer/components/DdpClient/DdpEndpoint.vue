@@ -46,17 +46,26 @@
         <div>
           <v-btn class="ml-2" color="primary" outlined elevation="0" height="40px" @click="openSaveEndpoint">Save
           </v-btn>
-          <modal-question ref="saveEndpointRef" @onAccept="saveEndpoint">
+          <modal-question ref="saveEndpointRef">
             <v-text-field v-if="typeSelected==='method'"
                           @blur="saveNameOfEndpoint(meteorMethod.name,'method')"
-                          v-model="meteorMethod.name" label="Endpoint name" outlined
+                          v-model="meteorMethod.name" label="* Endpoint name" outlined
                           dense></v-text-field>
             <v-text-field v-else v-model="publication.name"
                           @blur="saveNameOfEndpoint(publication.name,'publication')"
-                          label="Endpoint name" outlined dense></v-text-field>
+                          label="* Endpoint name" outlined dense></v-text-field>
             <vue-simplemde v-model="description.current" :configs="{placeholder:'Endpoint description (Optional)'}"
                            class="markdown-editor"/>
-            <select-collection-or-folder v-bind:connection="ddpConnection"></select-collection-or-folder>
+            <select-collection-or-folder ref="folderSelectedRef"
+                                         v-bind:connection="ddpConnection"></select-collection-or-folder>
+            <template v-slot:questionButtons>
+              <v-btn color="error" outlined depressed v-on:click="$refs.saveEndpointRef.dialog=false">
+                Cancel
+              </v-btn>
+              <v-btn color="primary" depressed v-on:click="saveEndpoint">
+                Accept
+              </v-btn>
+            </template>
           </modal-question>
         </div>
       </v-col>
@@ -126,7 +135,8 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['saveDescriptionOfOpenEndpoint', 'saveNameOfOpenEndpoint', 'saveCollectionNameOfOpenEndpoint']),
+    ...mapMutations(['saveDescriptionOfOpenEndpoint', 'saveNameOfOpenEndpoint', 'saveCollectionNameOfOpenEndpoint',
+      'saveOpenEndpointInCollection']),
     updateConnection(value) {
       this.connected = value;
     },
@@ -226,11 +236,29 @@ export default {
       });
     },
     openSaveEndpoint() {
-      this.$refs.saveEndpointRef.title = 'Save endpoint request';
+      this.$refs.saveEndpointRef.title = 'Save endpoint';
       this.$refs.saveEndpointRef.dialog = true;
     },
+    validateEndpointToBeSaved() {
+      let isValid = true;
+      if (!this.$refs.folderSelectedRef.indexesByFolder.length && !this.endpoint.name) {
+        this.$alert.showAlertSimple('error', 'Please fill all required fields');
+        isValid = false;
+      } else if (!!this.$refs.folderSelectedRef.folderTemporal.children.find(endpoint => endpoint.name === this.endpoint.name)) {
+        this.$alert.showAlertSimple('error', 'Endpoint name already exists');
+        isValid = false;
+      }
+      return isValid;
+    },
     saveEndpoint() {
-
+      if (this.validateEndpointToBeSaved()) {//TODO: Implement vee-validate
+        this.saveOpenEndpointInCollection({
+          connectionName: this.ddpConnection.title,
+          openEndpoint: this.endpoint,
+          indexesByFolder: this.$refs.folderSelectedRef.indexesByFolder
+        });
+        this.$refs.saveEndpointRef.dialog = false;
+      }
     }
   }
 };

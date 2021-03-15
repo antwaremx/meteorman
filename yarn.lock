@@ -11423,10 +11423,10 @@ vue@^2.2.6, vue@^2.5.16, vue@^2.6.12:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
 
-vuetify@^2.3.14:
-  version "2.3.14"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.3.14.tgz#42a864b8f28b67775758a5e5e42fc50733f1bdbe"
-  integrity sha512-1Ys1MreJQOL/Ddp3YotBi1SlC2+1A0/RVkDXX3Azspt8incPdAnNB0JyChHiJ/TM+L+KSA7T4EXF9YDrCWENmg==
+vuetify@^2.4.6:
+  version "2.4.6"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.4.6.tgz#127b37bd36c7a63f61615e0cd6f97e8b203e7a07"
+  integrity sha512-oqAWKAin07ip/QuT/p4bL1LegE3MYPbfojrOcj80RATZDSnJyco2PZD8QuIzd0RhYfdAuSTkY8elvHsLu90RuQ==
 
 vuex-electron@^1.0.3:
   version "1.0.3"

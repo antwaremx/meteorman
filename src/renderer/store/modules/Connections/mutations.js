@@ -118,6 +118,15 @@ const removeArgOfOpenEndpoint = (state, { connectionName, openEndpointName, argI
 	endpoint.args.splice(argIndex, 1);
 };
 
+const saveOpenEndpointInCollection = (state, { connectionName, openEndpoint, indexesByFolder }) => {
+	const connection = state.ddpConnections.find(ddpConnection => ddpConnection.title === connectionName);
+	let folder = connection.collections[indexesByFolder.shift()];
+	for (let folderIndex of indexesByFolder) {
+		folder = folder.children[folderIndex];
+	}
+	folder.children.push({ ...openEndpoint, type: 'endpoint' });
+};
+
 export {
 	initializeConnections,
 	addConnection,
@@ -134,5 +143,6 @@ export {
 	saveNameOfOpenEndpoint,
 	saveCollectionNameOfOpenEndpoint,
 	saveArgOfOpenEndpoint,
-	removeArgOfOpenEndpoint
+	removeArgOfOpenEndpoint,
+	saveOpenEndpointInCollection
 };

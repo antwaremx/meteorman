@@ -9,8 +9,8 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-treeview v-model="tree" :open="initiallyOpen" :items="connection.collections"
-                  activatable item-key="name" dense open-on-click>
+      <v-treeview v-model="tree" ref="treeViewRef" :items="connection.collections" activatable item-key="name" dense
+                  open-on-click @update:active="activeItems">
         <template v-slot:prepend="{ item, open }">
           <v-icon v-if="item.type==='folder'">
             {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
@@ -39,15 +39,24 @@ export default {
   components: { CollectionOptions, AddCollection },
   props: ['connection'],
   data: () => ({
-    initiallyOpen: ['public'],
     icons: {
       method: 'mdi-alpha-m-circle-outline',
       publication: 'mdi-alpha-p-circle-outline',
       collection: 'mdi-folder-table',
-      folder: 'mdi-folder',
+      folder: 'mdi-folder'
     },
     tree: []
-  })
+  }),
+  mounted() {
+    console.log('activeCache: ',this.$refs.treeViewRef.activeCache);
+    console.log('activeCache size: ',this.$refs.treeViewRef.activeCache.size);
+    console.log('type activeCache: ',typeof this.$refs.treeViewRef.activeCache);
+  },
+  methods:{
+    activeItems(items){
+      console.log('activeItems: ', items);
+    }
+  }
 };
 </script>
 

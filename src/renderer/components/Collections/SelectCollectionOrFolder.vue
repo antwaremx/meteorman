@@ -1,34 +1,37 @@
 <template>
-  <v-list dense>
-    <v-subheader v-if="!indexesByFolder.length">All collections</v-subheader>
-    <a v-else class="text-decoration-none text--accent-1" @click="exitFromFolder">
-      <v-icon>mdi-menu-left</v-icon>
-      {{ folderTemporal.name }}
-    </a>
-    <v-list-item v-for="(item, i) in items" :key="i">
-      <template v-slot:default="{ active }">
-        <v-list-item-icon>
-          <v-icon v-if="item.type==='folder'">
-            mdi-folder
-          </v-icon>
-          <v-icon v-else-if="item.type==='endpoint'">
-            {{ icons[item.endpointType] }}
-          </v-icon>
-          <v-icon v-else>
-            mdi-folder-table
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title v-text="item.name"></v-list-item-title>
-        </v-list-item-content>
-        <v-list-item-action v-if="item.type!=='endpoint'">
-          <v-btn x-small @click="enterToFolder(i)" icon>
-            <v-icon x-small color="grey lighten-1">mdi-play</v-icon>
-          </v-btn>
-        </v-list-item-action>
-      </template>
-    </v-list-item>
-  </v-list>
+  <div>
+    <div class="subtitle-1 black--text">* Select a collection or folder to save to:</div>
+    <v-list dense>
+      <v-subheader v-if="!indexesByFolder.length">All collections</v-subheader>
+      <a v-else class="text-decoration-none text--accent-1" @click="exitFromFolder">
+        <v-icon>mdi-menu-left</v-icon>
+        {{ folderTemporal.name }}
+      </a>
+      <v-list-item v-for="(item, i) in items" :key="i">
+        <template v-slot:default="{ active }">
+          <v-list-item-icon>
+            <v-icon v-if="item.type==='folder'">
+              mdi-folder
+            </v-icon>
+            <v-icon v-else-if="item.type==='endpoint'">
+              {{ icons[item.endpointType] }}
+            </v-icon>
+            <v-icon v-else>
+              mdi-folder-table
+            </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.name"></v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-action v-if="item.type!=='endpoint'">
+            <v-btn x-small @click="enterToFolder(i)" icon>
+              <v-icon x-small color="grey lighten-1">mdi-play</v-icon>
+            </v-btn>
+          </v-list-item-action>
+        </template>
+      </v-list-item>
+    </v-list>
+  </div>
 </template>
 
 <script>
