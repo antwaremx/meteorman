@@ -1,6 +1,5 @@
 <template>
   <v-app-bar app dark dense color="#DE3F46">
-    <import-collections></import-collections>
     <v-spacer></v-spacer>
     <img class="logo-meteorman" src="../../assets/logobn.png" alt="meteorman">
     <v-spacer></v-spacer>
@@ -9,10 +8,8 @@
 
 <script>
 
-import ImportCollections from '../../components/Collections/ImportCollections';
 export default {
-  name: 'HeaderView',
-  components: { ImportCollections }
+  name: 'HeaderView'
 };
 </script>
 

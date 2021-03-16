@@ -6,6 +6,7 @@
       </v-col>
       <v-col class="d-flex justify-end">
         <add-collection v-bind:connection="connection"></add-collection>
+        <import-collections v-bind:connection="connection"></import-collections>
       </v-col>
     </v-row>
     <v-row>
@@ -34,12 +35,13 @@
 import AddCollection from '../../components/Collections/AddCollection';
 import CollectionOptions from '../../components/Collections/CollectionOptions';
 import { createNamespacedHelpers } from 'vuex';
+import ImportCollections from '../../components/Collections/ImportCollections';
 
 const { mapMutations } = createNamespacedHelpers('connections');
 
 export default {
   name: 'AsideView',
-  components: { CollectionOptions, AddCollection },
+  components: { ImportCollections, CollectionOptions, AddCollection },
   props: ['connection'],
   data: () => ({
     icons: {

@@ -144,6 +144,10 @@ export default {
     },
     exportCollection() {
       console.log('Export collection');
+      let link = document.createElement('a');
+      link.href = 'data:application/json;charset=UTF-8,' + escape(JSON.stringify(this.element));
+      link.download = this.element.name + '.json';
+      link.click();
     },
     removeCollection() {
       if (this.$parent.level === 0) {

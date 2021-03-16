@@ -30,30 +30,43 @@
 <script>
 import ModalAccept from '../Utilities/Modals/ModalAccept';
 import fs from 'fs';
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapMutations } = createNamespacedHelpers('connections');
 
 export default {
   name: 'ImportCollections',
   components: { ModalAccept },
+  props: ['connection'],
   data() {
     return {
       files: []
     };
   },
   methods: {
+    ...mapMutations(['addCollectionToConnection']),
     openImportCollectionsModal() {
       this.$refs.importCollectionRef.title = 'Import';
       this.$refs.importCollectionRef.dialog = true;
     },
     importCollections() {
-      console.log('finished import: ', this.files);
       try {
         for (let file of this.files) {
           const data = fs.readFileSync(file.path, { encoding: 'utf8', flag: 'r' });
           const jsonCollection = JSON.parse('' + data);
-          console.log('data: ', jsonCollection);
+          //TODO: Validate format of data
+          if (!this.connection.collections.find(collection => collection.name === jsonCollection.name)) {
+            this.addCollectionToConnection({
+              connectionName: this.connection.title,
+              collection: jsonCollection
+            });
+          } else {
+            console.warn('collection already exists: ', jsonCollection.name);
+          }
         }
       } catch (exception) {
-        console.error('Ocurrió un error al importar las colecciones: ', exception);
+        console.error('Error to import collection: ', exception);
+        this.$alert.showAlertSimple('error', 'Malformed JSON');
       }
     }
   }
