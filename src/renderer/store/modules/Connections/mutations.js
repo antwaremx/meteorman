@@ -137,11 +137,22 @@ const saveOpenEndpointInCollection = (state, { connectionName, openEndpoint, ind
 		folderIndexes.push(folderIndex);
 	}
 	const folderIndexesString = folderIndexes.toString().replaceAll(',', '');
-	folder.children.push({
+	const endpointId = `${ collectionName }-${ indexesByFolder.length ? (folderIndexesString + '-') : '' }${ openEndpoint.name }`;
+	const endpoint = {
 		...openEndpoint,
 		type: 'endpoint',
-		id: `${ collectionName }-${ indexesByFolder.length ? (folderIndexesString + '-') : '' }${ openEndpoint.name }`
-	});
+		id: endpointId,
+		title: openEndpoint.name
+	};
+	const existsEndpoint = folder.children.find(element => element.id === endpoint.id);
+	if (existsEndpoint) {
+		const endpointIndex = folder.children.findIndex(element => element.id === endpoint.id);
+		folder.children[endpointIndex] = endpoint;
+	} else {
+		folder.children.push(endpoint);
+		const openEndpointIndex = connection.openEndpoints.findIndex(oe => oe.id === openEndpoint.id);
+		connection.openEndpoints[openEndpointIndex] = JSON.parse(JSON.stringify(endpoint));
+	}
 };
 
 const openEndpointFromCollection = (state, { connectionName, endpoint }) => {

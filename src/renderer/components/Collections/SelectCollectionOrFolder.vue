@@ -47,20 +47,13 @@ export default {
       folder: 'mdi-folder'
     },
     folderTemporal: {},
-    selectedItem: 0,
     indexesByFolder: []
   }),
   beforeMount() {
     this.items = this.connection.collections;
   },
   methods: {
-    enterToFolder(indexFolder) {
-      this.folderTemporal = this.items[indexFolder];
-      this.indexesByFolder.push(indexFolder);
-      this.items = this.folderTemporal.children;
-    },
-    exitFromFolder() {
-      this.indexesByFolder.pop();
+    updateLocationOfEndpoint() {
       let newList = this.connection.collections;
       let folderTemporal = {};
       for (let index of this.indexesByFolder) {
@@ -68,11 +61,35 @@ export default {
         newList = folderTemporal.children;
       }
       this.folderTemporal = folderTemporal;
-      if (this.folderTemporal.children) {
-        this.items = this.folderTemporal.children;
+      this.items = newList;
+    },
+    initializeCurrentLocation(endpointId) {
+      //suburmon-0-user.save \ rematch-endpoint | endpoint-1
+      const patternLocation = endpointId.split('-');//TODO: Validate names of collections or elements to not include -
+      const collectionName = patternLocation[0];
+      if (this.connection.collections.find(collection => collection.name === collectionName)) {
+        let indexesByFolder = [];
+        indexesByFolder.push(this.connection.collections.findIndex(collection => collection.name === collectionName));
+        const isInFolder = patternLocation.length === 3;
+        if (isInFolder) {
+          indexesByFolder = indexesByFolder.concat(patternLocation[1].split('').map(i => parseInt(i)));
+        }
+        this.indexesByFolder = indexesByFolder;
+        this.updateLocationOfEndpoint();
       } else {
-        this.items = newList;
+        this.indexesByFolder = [];
+        this.folderTemporal = {};
+        this.items = this.connection.collections;
       }
+    },
+    enterToFolder(indexFolder) {
+      this.folderTemporal = this.items[indexFolder];
+      this.indexesByFolder.push(indexFolder);
+      this.items = this.folderTemporal.children;
+    },
+    exitFromFolder() {
+      this.indexesByFolder.pop();
+      this.updateLocationOfEndpoint();
     }
   }
 };

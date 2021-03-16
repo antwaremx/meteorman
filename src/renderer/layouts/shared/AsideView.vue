@@ -54,7 +54,6 @@ export default {
     ...mapMutations(['openEndpointFromCollection']),
     activeItem(item) {
       const itemSelected = item[0];
-      console.log('activeItem: ', itemSelected);
       if (itemSelected && itemSelected.type === 'endpoint') {
         this.openEndpointFromCollection({
           connectionName: this.connection.title,

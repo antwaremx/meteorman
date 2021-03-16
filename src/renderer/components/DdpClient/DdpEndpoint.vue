@@ -237,6 +237,7 @@ export default {
     },
     openSaveEndpoint() {
       this.$refs.saveEndpointRef.title = 'Save endpoint';
+      this.$refs.folderSelectedRef.initializeCurrentLocation(this.endpoint.id);
       this.$refs.saveEndpointRef.dialog = true;
     },
     validateEndpointToBeSaved() {
@@ -244,7 +245,8 @@ export default {
       if (!this.$refs.folderSelectedRef.indexesByFolder.length && !this.endpoint.name) {
         this.$alert.showAlertSimple('error', 'Please fill all required fields');
         isValid = false;
-      } else if (!!this.$refs.folderSelectedRef.folderTemporal.children.find(endpoint => endpoint.name === this.endpoint.name)) {
+      } else if (!!this.$refs.folderSelectedRef.folderTemporal.children
+          .find(endpoint => endpoint.name === this.endpoint.name && endpoint.id !== this.endpoint.id)) {
         this.$alert.showAlertSimple('error', 'Endpoint name already exists');
         isValid = false;
       }
