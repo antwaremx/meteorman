@@ -273,5 +273,6 @@ export default {
 .markdown-viewer /deep/ code {
   color: initial !important;
   font-weight: initial !important;
+  background-color: initial !important;
 }
 </style>
