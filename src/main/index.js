@@ -1,4 +1,5 @@
-import { app, BrowserWindow, Menu } from 'electron';
+const { app, BrowserWindow, Menu } = require('electron')
+const { join } = require('path')
 
 /**
  * Set `__static` path to static files in production
@@ -11,7 +12,7 @@ if (process.env.NODE_ENV !== 'development') {
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
-  : `file://${__dirname}/index.html`
+  : join('file://', __dirname, '/index.html')
 
 function createWindow () {
   /**
@@ -23,7 +24,6 @@ function createWindow () {
     width: 1280,
     webPreferences: {
       nodeIntegration: true,
-      nodeIntegrationInWorker: true,
       enableRemoteModule: true
     }
   })
@@ -55,7 +55,9 @@ function createWindow () {
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
-app.on('ready', createWindow)
+app.whenReady().then(() => {
+  createWindow()
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

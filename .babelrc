@@ -1,39 +1,30 @@
 {
   "comments": false,
   "env": {
-    "test": {
-      "presets": [
-        ["env", {
-          "targets": { "node": 7 }
-        }],
-        "stage-0"
-      ],
-      "plugins": ["istanbul"]
-    },
     "main": {
       "presets": [
-        ["env", {
-          "targets": { "node": 7 }
-        }],
-        "stage-0"
+        ["@babel/preset-env", {
+          "targets": { "node": 12 }
+        }]
       ]
     },
     "renderer": {
       "presets": [
-        ["env", {
+        ["@babel/preset-env", {
           "modules": false
-        }],
-        "stage-0"
+        }]
       ]
     },
     "web": {
       "presets": [
-        ["env", {
+        ["@babel/preset-env", {
           "modules": false
-        }],
-        "stage-0"
+        }]
       ]
     }
   },
-  "plugins": ["transform-runtime"]
+  "plugins": [
+    "@babel/transform-runtime",
+    "@babel/plugin-syntax-dynamic-import"
+  ]
 }
