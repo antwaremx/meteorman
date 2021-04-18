@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <v-btn color="primary" icon @click="openAddCollectionModal">
-      <v-icon>mdi-plus</v-icon>
+  <div class="">
+    <v-btn x-small color="primary" text @click="openAddCollectionModal">
+      <v-icon x-small>mdi-plus</v-icon> New
     </v-btn>
     <modal-question ref="addCollectionRef" @onAccept="addCollection" @onCancel="resetForm">
       <v-text-field v-model="collection.name" label="Collection name" outlined dense></v-text-field>

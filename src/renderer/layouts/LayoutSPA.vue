@@ -4,7 +4,7 @@
     <v-main>
       <v-row>
         <v-col cols="12" md="12">
-          <v-tabs v-model="connectionTab">
+          <v-tabs v-model="connectionTab" class="connection-tabs">
             <v-tab v-for="ddp in ddpConnections" :key="ddp.title">
               {{ ddp.title }}
               <v-icon x-small right @click="removeDdpConnection(ddp)">
@@ -19,7 +19,7 @@
       </v-row>
       <v-tabs-items v-model="connectionTab">
         <v-tab-item v-for="ddp in ddpConnections" :key="ddp.title">
-            <Split style="height: calc(100vh - 120px)">
+            <Split class="split-area-left">
               <SplitArea :size="25">
                 <aside-view id="aside" v-bind:connection="ddp"></aside-view>
               </SplitArea>
@@ -68,8 +68,11 @@ export default {
 </script>
 
 <style scoped>
-#aside, #section {
-  border: 1px solid;
-}
 
+.split-area-left {
+  height: calc(100vh - 120px);
+}
+.connection-tabs {
+  border-bottom: 1px solid #eee;
+}
 </style>

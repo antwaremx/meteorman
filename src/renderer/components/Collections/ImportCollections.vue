@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn text outlined @click="openImportCollectionsModal">Import</v-btn>
+    <v-btn text x-small color="primary" @click="openImportCollectionsModal">Import</v-btn>
     <modal-accept ref="importCollectionRef" @onAccept="importCollections">
       <v-file-input
           v-model="files"

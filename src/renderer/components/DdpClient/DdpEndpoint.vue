@@ -169,7 +169,7 @@ export default {
         const firstResponse = this.connection.Meteor.collection(this.publication.collectionName).filter(e => e).fetch();
         this.$refs.methodResponseRef.loadResponse(firstResponse, elapsedTime);
         this.connection.Meteor.collection(this.publication.collectionName).filter(e => e)
-            .onChange(({ prev, next }) => {
+            .onChange(({ next }) => {
               this.$refs.methodResponseRef.loadResponse(next);
             });
       } catch (exception) {

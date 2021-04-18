@@ -1,26 +1,25 @@
 <template>
   <div>
     <v-row>
-      <v-col>
-        <h3>Collections</h3>
-      </v-col>
-      <v-col class="d-flex justify-end">
-        <add-collection v-bind:connection="connection"></add-collection>
-        <import-collections v-bind:connection="connection"></import-collections>
+      <v-col class="d-flex justify-space-between">
+        <div>
+          <h3>Collections</h3>
+        </div>
+        <div class="d-flex flex-row-reverse">
+          <add-collection v-bind:connection="connection"></add-collection>
+          <import-collections v-bind:connection="connection"></import-collections>
+        </div>
       </v-col>
     </v-row>
     <v-row>
       <v-treeview v-model="tree" :items="connection.collections" activatable item-key="id" dense
-                  return-object open-on-click @update:active="activeItem">
+                  return-object open-on-click @update:active="activeItem" class="tree-view pb-5">
         <template v-slot:prepend="{ item, open }">
-          <v-icon v-if="item.type==='folder'">
+          <v-icon v-if="item.type==='folder'" class="mr-2">
             {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
           </v-icon>
-          <v-icon v-else-if="item.type==='endpoint'">
+          <v-icon v-else-if="item.type==='endpoint'" class="mr-2">
             {{ icons[item.endpointType] }}
-          </v-icon>
-          <v-icon v-else>
-            mdi-folder-table
           </v-icon>
         </template>
         <template v-slot:append="{item}">
@@ -69,5 +68,16 @@ export default {
 </script>
 
 <style scoped>
+.tree-view {
+  width: 100%;
+}
+</style>
 
+<style>
+.v-treeview-node__prepend {
+  min-width: auto;
+}
+.v-application--is-ltr .v-treeview-node__prepend {
+  margin-right: 0;
+}
 </style>
