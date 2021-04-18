@@ -70,7 +70,7 @@
         </div>
       </v-col>
     </v-row>
-    <Split style="height: calc(100vh - 250px);" direction="vertical">
+    <Split style="height: calc(100vh - 325px);" direction="vertical">
       <SplitArea>
         <arguments ref="argsRef" v-bind:connection="ddpConnection" v-bind:endpoint="endpoint"></arguments>
       </SplitArea>

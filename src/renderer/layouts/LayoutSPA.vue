@@ -19,14 +19,14 @@
       </v-row>
       <v-tabs-items v-model="connectionTab">
         <v-tab-item v-for="ddp in ddpConnections" :key="ddp.title">
-          <v-row>
-            <v-col cols="12" md="3">
-              <aside-view id="aside" v-bind:connection="ddp"></aside-view>
-            </v-col>
-            <v-col cols="12" md="9">
-              <router-view id="section" v-bind:connection="ddp" name="sectionView"></router-view>
-            </v-col>
-          </v-row>
+            <Split style="height: calc(100vh - 120px)">
+              <SplitArea :size="25">
+                <aside-view id="aside" v-bind:connection="ddp"></aside-view>
+              </SplitArea>
+              <SplitArea :size="75">
+                <router-view id="section" v-bind:connection="ddp" name="sectionView"></router-view>
+              </SplitArea>
+            </Split>
         </v-tab-item>
       </v-tabs-items>
     </v-main>
