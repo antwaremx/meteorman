@@ -8,11 +8,16 @@
       <vue-json-editor id="editorResponse" ref="vueJsonEditorRef" v-model="response" :show-btns="false" mode="code"
                        :expanded-on-start="true"></vue-json-editor>
     </div>
+    <div class="empty-response" v-show="!response">
+      <img width="100" :src="logo" alt="Meteorman" class="logo">
+      <label>Hit send to get a response</label>
+    </div>
   </v-container>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
+import img from '@/assets/MeteormanFinal.png';
 
 const { mapState } = createNamespacedHelpers('dragAndDrop');
 
@@ -21,7 +26,8 @@ export default {
   data: () => ({
     height: 200,
     response: '',
-    elapsedTime: null
+    elapsedTime: null,
+    logo: img
   }),
   watch: {
     'responses.main'(newValue) {
@@ -71,5 +77,21 @@ export default {
   top: -15px;
   left: 50%;
   cursor: ns-resize;
+}
+.empty-response {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+label {
+  color: #ccc;
+  text-align: center;
+}
+.logo {
+  filter: grayscale(1);
+  opacity: 0.3;
 }
 </style>
