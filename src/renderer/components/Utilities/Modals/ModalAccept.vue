@@ -14,11 +14,13 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="error" depressed v-on:click="onAccept">
-          <slot name="confirmLabel">
-            Accept
-          </slot>
-        </v-btn>
+        <slot name="action-buttons">
+          <v-btn color="error" depressed v-on:click="onAccept">
+            <slot name="confirmLabel">
+              Accept
+            </slot>
+          </v-btn>
+        </slot>
       </v-card-actions>
     </v-card>
   </v-dialog>

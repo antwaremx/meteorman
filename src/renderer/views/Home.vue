@@ -2,14 +2,14 @@
   <v-container fluid>
     <server-connection ref="serverRef" @onUpdateConnection="updateConnection"></server-connection>
     <v-tabs v-model="endpointTab">
-      <v-tab v-for="endpoint in connection.openEndpoints" :key="endpoint.id">
+      <v-tab v-for="endpoint in connection.openEndpoints" :key="endpoint.id" class="endpoint-tab">
         {{ endpoint.title }}
         <v-icon x-small right @click="removeEndpoint(endpoint)">
           mdi-close
         </v-icon>
       </v-tab>
       <v-btn icon class="align-self-center mr-4" @click="addEndpoint">
-        <v-icon>mdi-plus</v-icon>
+        <v-icon color="primary">mdi-plus</v-icon>
       </v-btn>
     </v-tabs>
     <v-tabs-items v-model="endpointTab">
@@ -64,7 +64,9 @@ export default {
 </script>
 
 <style scoped>
-
+.endpoint-tab {
+  text-transform: initial !important;
+}
 </style>
 
 <style>

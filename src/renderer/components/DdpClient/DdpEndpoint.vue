@@ -1,23 +1,27 @@
 <template>
   <div class="connection-wrapper">
     <v-row>
-      <v-col cols="12" md="12">
-        <div v-if="!editingDescription">
-          <a class="text-decoration-none text--accent-1" @click="editingDescription=true">
-            {{ !endpoint.description ? 'Add' : 'Edit' }} description
-          </a>
-          <markdown-it-vue-light class="md-body markdown-viewer" :content="endpoint.description || ''"/>
-        </div>
-        <div v-else>
-          <vue-simplemde class="markdown-editor" v-model="description.current"/>
-          <div class="d-flex justify-end">
-            <v-btn small outlined color="error" class="mr-2" @click="cancelDescription">Cancel</v-btn>
-            <v-btn small outlined color="success" @click="saveDescription">Save</v-btn>
+      <div class="d-flex pt-5 pl-3" style="width: 100%">
+        <a class="text-decoration-none text--accent-1" @click="onOpenDocumentation">
+          See doc
+        </a>
+        <modal-accept ref="documentationRef">
+          <div v-if="!editingDescription">
+            <markdown-it-vue-light class="md-body markdown-viewer" :content="endpoint.description || ''"/>
           </div>
-        </div>
-      </v-col>
-    </v-row>
-    <v-row>
+          <div v-else>
+            <vue-simplemde class="markdown-editor" v-model="description.current"/>
+          </div>
+          <template v-slot:action-buttons>
+            <v-btn v-if="!editingDescription" color="error" small
+                   depressed @click="editingDescription=true"> {{ !endpoint.description ? 'Add' : 'Edit' }}</v-btn>
+            <div v-else>
+              <v-btn small outlined color="error" class="mr-2" @click="cancelDescription">Cancel</v-btn>
+              <v-btn small outlined color="success" @click="saveDescription">Save</v-btn>
+            </div>
+          </template>
+        </modal-accept>
+      </div>
       <v-col class="d-flex">
         <div class="small-field">
           <v-select :items="dppTypes" v-model="typeSelected" dense outlined class="start-addon"
@@ -91,12 +95,13 @@ import SaveEndpoint from '../Collections/SaveEndpoint';
 import { createNamespacedHelpers } from 'vuex';
 import ModalQuestion from '../Utilities/Modals/ModalQuestion';
 import SelectCollectionOrFolder from '../Collections/SelectCollectionOrFolder';
+import ModalAccept from '../Utilities/Modals/ModalAccept';
 
 const { mapMutations } = createNamespacedHelpers('connections');
 
 export default {
   name: 'DdpEndpoint',
-  components: { SelectCollectionOrFolder, ModalQuestion, SaveEndpoint, MethodResponse, Arguments, MarkdownItVueLight },
+  components: {ModalAccept, SelectCollectionOrFolder, ModalQuestion, SaveEndpoint, MethodResponse, Arguments, MarkdownItVueLight },
   props: ['connection', 'ddpConnection', 'endpoint'],
   data() {
     return {
@@ -139,6 +144,10 @@ export default {
       'saveOpenEndpointInCollection']),
     updateConnection(value) {
       this.connected = value;
+    },
+    onOpenDocumentation() {
+      this.$refs.documentationRef.title = 'Documentation';
+      this.$refs.documentationRef.dialog = true;
     },
     async callMethod(args) {
       const initialTime = performance.now();
