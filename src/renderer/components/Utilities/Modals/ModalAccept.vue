@@ -1,5 +1,5 @@
 <template>
-  <v-dialog id="modalAccept" max-width="500px" v-model="dialog" eager @click:outside="onAccept">
+  <v-dialog id="modalAccept" :fullscreen="fullscreen" max-width="500px" v-model="dialog" eager @click:outside="onAccept">
     <v-card>
       <v-card-title class="black text-h5 d-flex justify-space-between">
         <div class="text-h6 white--text">{{ title }}</div>
@@ -35,6 +35,12 @@ export default {
     icon: null,
     dialog: false
   }),
+  props: {
+    fullscreen: {
+      type: Boolean,
+      default: false
+    }
+  },
   mounted() {
     Vue.prototype.$modalAccept = this;
   },

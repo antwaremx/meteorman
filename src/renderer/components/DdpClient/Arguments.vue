@@ -50,11 +50,25 @@
                    class="remove-button" @click="removeGroup(index)">
               <v-icon>mdi-close</v-icon>
             </v-btn>
+            <v-btn tabindex="-1" v-if="argument.type.name === 'object' || argument.type.name === 'array'" icon
+                   class="expand-button" @click="expandJson(index)">
+              <v-icon>mdi-arrow-expand-all</v-icon>
+            </v-btn>
           </td>
         </tr>
         </tbody>
       </template>
     </v-simple-table>
+    <modal-accept fullscreen ref="jsonAccept">
+      <div class="editor-fullwidth">
+        <vue-json-editor v-if="selectedArg && selectedArg.type.name === 'object'"
+                         v-model="selectedArg.json" :show-btns="false" mode="code" @input="autoSaveArg(selectedArgIndex)"
+                         :expandedOnStart="true"></vue-json-editor>
+        <vue-json-editor v-if="selectedArg && selectedArg.type.name === 'array'"
+                         v-model="selectedArg.array" :show-btns="false" mode="code" @input="autoSaveArg(selectedArgIndex)"
+                         :expandedOnStart="true"></vue-json-editor>
+      </div>
+    </modal-accept>
   </v-form>
 </template>
 
@@ -63,6 +77,7 @@ import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import timeout from '../../mixins/timeout';
 
 import { createNamespacedHelpers } from 'vuex';
+import ModalAccept from '../Utilities/Modals/ModalAccept';
 
 const { mapMutations } = createNamespacedHelpers('connections');
 
@@ -71,11 +86,14 @@ export default {
   mixins: [timeout],
   props: ['connection', 'endpoint'],
   components: {
+    ModalAccept,
     ValidationProvider,
     ValidationObserver
   },
   data() {
     return {
+      selectedArg: null,
+      selectedArgIndex: null,
       args: [
         {
           array: [],
@@ -115,6 +133,12 @@ export default {
           type: { name: 'none', description: 'Select one type' }
         });
       }
+    },
+    expandJson(index) {
+      this.selectedArgIndex = index;
+      this.selectedArg = this.args[index];
+      this.$refs.jsonAccept.title = 'Argument edition';
+      this.$refs.jsonAccept.dialog = true;
     },
     removeGroup(index) {
       this.args.splice(index, 1);
@@ -159,11 +183,21 @@ export default {
   top: 0;
 }
 
-.param-row .remove-button {
+.expand-button {
+  position: absolute;
+  right: 50px;
+  top: 0;
+}
+
+.editor-fullwidth /deep/ .ace-jsoneditor {
+  height: calc(100vh - 150px) !important;
+}
+
+.param-row .remove-button, .param-row .expand-button {
   display: none;
 }
 
-.param-row:hover .remove-button {
+.param-row:hover .remove-button, .param-row:hover .expand-button {
   display: block;
   z-index: 2;
 }
