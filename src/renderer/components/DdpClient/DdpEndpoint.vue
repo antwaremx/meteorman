@@ -5,7 +5,7 @@
         <a class="text-decoration-none text--accent-1" @click="onOpenDocumentation">
           See doc
         </a>
-        <modal-accept ref="documentationRef">
+        <modal-accept large ref="documentationRef">
           <div v-if="!editingDescription">
             <markdown-it-vue-light class="md-body markdown-viewer" :content="endpoint.description || ''"/>
           </div>

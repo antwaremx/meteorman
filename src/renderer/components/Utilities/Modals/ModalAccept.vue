@@ -1,5 +1,5 @@
 <template>
-  <v-dialog id="modalAccept" :fullscreen="fullscreen" max-width="500px" v-model="dialog" eager @click:outside="onAccept">
+  <v-dialog id="modalAccept" :fullscreen="fullscreen" :max-width="!large ? '500px' : '70%'" v-model="dialog" eager @click:outside="onAccept">
     <v-card>
       <v-card-title class="black text-h5 d-flex justify-space-between">
         <div class="text-h6 white--text">{{ title }}</div>
@@ -39,6 +39,10 @@ export default {
   }),
   props: {
     fullscreen: {
+      type: Boolean,
+      default: false
+    },
+    large: {
       type: Boolean,
       default: false
     }
