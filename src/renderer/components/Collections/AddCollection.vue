@@ -5,8 +5,8 @@
     </v-btn>
     <modal-question ref="addCollectionRef" @onAccept="addCollection" @onCancel="resetForm">
       <v-text-field v-model="collection.name" label="Collection name" outlined dense></v-text-field>
-      <vue-simplemde v-model="collection.description" :configs="{placeholder:'Collection description (Optional)'}"
-                     class="markdown-editor"/>
+<!--      <vue-simplemde v-model="collection.description" :configs="{placeholder:'Collection description (Optional)'}"
+                     class="markdown-editor"/>-->
     </modal-question>
   </div>
 </template>

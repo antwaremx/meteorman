@@ -7,8 +7,8 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-item link dense>
-          <v-list-item-title @click="editCollection">Edit</v-list-item-title>
+        <v-list-item v-if="false" link dense>
+          <v-list-item-title>Edit</v-list-item-title>
         </v-list-item>
         <v-list-item v-if="element.children" link dense>
           <v-list-item-title @click="openAddFolderModal">Add folder</v-list-item-title>

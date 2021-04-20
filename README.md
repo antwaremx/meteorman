@@ -15,14 +15,12 @@ A DDP Client with GUI
 [![forthebadge](http://forthebadge.com/images/badges/uses-js.svg)](http://forthebadge.com) 
 [![forthebadge](https://forthebadge.com/images/badges/made-with-vue.svg)](http://forthebadge.com)
 [![forthebadge](http://forthebadge.com/images/badges/makes-people-smile.svg)](http://forthebadge.com)
-  
-*Read this in other languages: [Spanish](README.es.md)
 
 </div>
 
 ## Starting 🚀
 
-Meteorman is The Postman of Meteor. Is a DDP Client with GUI
+Meteorman is The Postman of Meteor. It is a DDP Client with GUI
 
 ### Preview 🎥
 
@@ -38,9 +36,9 @@ Meteorman is The Postman of Meteor. Is a DDP Client with GUI
 
 | Platform | Arch    | Version | Link                                                                                                              |
 | ---------- | --------------- | ------- | ------------------------------------------------------------------------------------------------------- |
-| Windows    | x64             | 1.1.1   | [Download](https://github.com/antwaremx/meteorman/releases/download/1.1.1/Meteorman-1.1.1.exe)   |
-| Mac        | x64             | 1.1.1   | [Download](https://github.com/antwaremx/meteorman/releases/download/1.1.1/Meteorman-1.1.1.dmg)         |
-| Linux      | x64             | 1.1.1   | [Download](https://github.com/antwaremx/meteorman/releases/download/1.1.1/Meteorman-1.1.1.AppImage)    |
+| Windows    | x64             | 2.0.0   | [Download](https://github.com/antwaremx/meteorman/releases/download/2.0.0/Meteorman-2.0.0.exe)   |
+| Mac        | x64             | 2.0.0   | [Download](https://github.com/antwaremx/meteorman/releases/download/2.0.0/Meteorman-2.0.0.dmg)         |
+| Linux      | x64             | 2.0.0   | [Download](https://github.com/antwaremx/meteorman/releases/download/2.0.0/Meteorman-2.0.0.AppImage)    |
 
 
 ## For Developers 🚀
