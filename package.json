@@ -1,6 +1,6 @@
 {
   "name": "meteorman",
-  "version": "1.9.0",
+  "version": "2.0.0",
   "author": "Antware",
   "description": "A DDP client with GUI",
   "license": "MIT",
@@ -55,6 +55,7 @@
     }
   },
   "dependencies": {
+    "@trodi/electron-splashscreen": "^1.0.0",
     "axios": "^0.21.1",
     "bufferutil": "^4.0.1",
     "isomorphic-ws": "^4.0.1",

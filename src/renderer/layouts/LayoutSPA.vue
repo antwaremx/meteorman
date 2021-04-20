@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <header-view></header-view>
+    <header-view id="headerView"></header-view>
     <v-main>
       <v-row>
         <v-col cols="12" md="12">
@@ -74,5 +74,8 @@ export default {
 }
 .connection-tabs {
   border-bottom: 1px solid #eee;
+}
+#headerView{
+  -webkit-app-region: drag;
 }
 </style>
