@@ -5,7 +5,7 @@ process.env.BABEL_ENV = 'web'
 const path = require('path')
 const webpack = require('webpack')
 
-const MinifyPlugin = require("babel-minify-webpack-plugin")
+const TerserPlugin = require('terser-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -96,9 +96,11 @@ let webConfig = {
     new webpack.DefinePlugin({
       'process.env.IS_WEB': 'true'
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.HotModuleReplacementPlugin()
   ],
+  optimization: {
+    noEmitOnErrors: true // NoEmitOnErrorsPlugin
+  },
   output: {
     filename: '[name].js',
     path: path.join(__dirname, '../dist/web')
@@ -119,21 +121,29 @@ let webConfig = {
 if (process.env.NODE_ENV === 'production') {
   webConfig.devtool = ''
 
+  webConfig.optimization = Object.assign(webConfig.optimization, {
+    minimize: true,
+    minimizer: [new TerserPlugin()]
+  })
+
   webConfig.plugins.push(
-    new MinifyPlugin(),
-    new CopyWebpackPlugin([
-      {
-        from: path.join(__dirname, '../static'),
-        to: path.join(__dirname, '../dist/web/static'),
-        ignore: ['.*']
-      }
-    ]),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"'
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    })
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: path.join(__dirname, '../static'),
+            to: path.join(__dirname, '../dist/web/static'),
+            globOptions: {
+              ignore: ['.*']
+            }
+          }
+        ]
+      }),
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': '"production"'
+      }),
+      new webpack.LoaderOptionsPlugin({
+        minimize: true
+      })
   )
 }
 

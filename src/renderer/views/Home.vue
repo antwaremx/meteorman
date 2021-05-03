@@ -1,70 +1,83 @@
 <template>
-  <div class="wrapper">
-    <app-bar/>
-    <v-card>
-      <v-tabs
-          v-model="tab"
-          center-active
-          next-icon="mdi-arrow-right-bold-box-outline"
-          prev-icon="mdi-arrow-left-bold-box-outline"
-          show-arrows
-      >
-        <v-tab
-            v-for="n in length"
-            :key="n"
-        >
-          DDP {{ n }}
-        </v-tab>
-        <v-menu bottom left>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-                icon
-                class="align-self-center mr-4"
-                v-bind="attrs"
-                v-on="on"
-                @click="length++"
-            >
-              <v-icon>
-                mdi-plus
-              </v-icon>
-            </v-btn>
-          </template>
-        </v-menu>
-      </v-tabs>
-
-      <v-tabs-items v-model="tab">
-        <v-tab-item v-for="n in length" :key="n">
-          <meteor-man/>
-        </v-tab-item>
-      </v-tabs-items>
-
-    </v-card>
-  </div>
+  <v-container fluid>
+    <server-connection ref="serverRef" @onUpdateConnection="updateConnection"></server-connection>
+    <v-tabs v-model="endpointTab">
+      <v-tab v-for="endpoint in connection.openEndpoints" :key="endpoint.id" class="endpoint-tab">
+        {{ endpoint.title }}
+        <v-icon x-small right @click="removeEndpoint(endpoint)">
+          mdi-close
+        </v-icon>
+      </v-tab>
+      <v-btn icon class="align-self-center mr-4" @click="addEndpoint">
+        <v-icon color="primary">mdi-plus</v-icon>
+      </v-btn>
+    </v-tabs>
+    <v-tabs-items v-model="endpointTab">
+      <v-tab-item v-for="endpoint in connection.openEndpoints" :key="endpoint.id">
+        <ddp-endpoint v-bind:connection="$refs.serverRef" v-bind:ddpConnection="connection"
+                      v-bind:endpoint="endpoint"></ddp-endpoint>
+      </v-tab-item>
+    </v-tabs-items>
+  </v-container>
 </template>
 
 <script>
-import AppBar from '../components/AppBar/AppBar';
-import MeteorMan from '../components/MeteorMan/MeteorMan';
+import ServerConnection from '../components/ServerConnection/ServerConnection';
+import DdpEndpoint from '../components/DdpClient/DdpEndpoint';
+import { createNamespacedHelpers } from 'vuex';
+
+const { mapMutations } = createNamespacedHelpers('connections');
 
 export default {
-  name: 'home',
-  components: { MeteorMan, AppBar },
+  name: 'Home',
+  components: { DdpEndpoint, ServerConnection },
+  props: ['connection'],
   data() {
     return {
-      length: 1,
-      tab: 0
+      connected: false,
+      endpointTab: null
     };
   },
+  beforeCreate() {
+    this.$root.$on('updateSelectedTab', (data) => {
+      //TODO: Validate only for current connection
+      this.endpointTab = this.connection.openEndpoints.findIndex(openEndpoint => openEndpoint.id === data.id);
+    });
+  },
+  beforeMount() {
+    this.initializeOpenEndpoints({ connectionName: this.connection.title });
+  },
   watch: {
-    length(val) {
-      this.tab = val - 1;
+    endpointTab() {
+      const responseView = document.querySelectorAll('.ace-jsoneditor .ace_text-input')[0];
+      if (responseView) {
+        responseView.focus();
+      }
+    }
+  },
+  methods: {
+    ...mapMutations(['initializeOpenEndpoints', 'addOpenEndpointToConnection', 'removeOpenEndpointOfConnection']),
+    updateConnection(value) {
+      //TODO: Add connection data to Vuex object.
+      this.connected = value;
+    },
+    addEndpoint() {
+      this.addOpenEndpointToConnection({ connectionName: this.connection.title });
+    },
+    removeEndpoint(endpoint) {
+      this.removeOpenEndpointOfConnection({ connectionName: this.connection.title, openEndpointId: endpoint.id });
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
+.endpoint-tab {
+  text-transform: initial !important;
+}
+</style>
 
+<style>
 * {
   box-sizing: border-box;
   margin: 0;
@@ -75,10 +88,17 @@ export default {
   display: none;
 }
 
-.wrapper {
-  background-color: aliceblue;
-  height: 100vh;
-  width: 100vw;
+.tree-view-item-key {
+  color: #9e3731;
+  font-weight: normal;
+}
+
+.tree-view-item-value-string, .tree-view-item-value-boolean {
+  color: #2251a0;
+}
+
+.tree-view-item-value-number {
+  color: #3c845c;
 }
 
 </style>

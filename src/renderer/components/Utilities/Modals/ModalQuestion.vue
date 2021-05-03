@@ -1,5 +1,5 @@
 <template>
-  <v-dialog id="modalAccept" :fullscreen="fullscreen" :max-width="!large ? '500px' : '70%'" v-model="dialog" eager @click:outside="onAccept">
+  <v-dialog id="modalQuestion" max-width="500px" v-model="dialog" eager>
     <v-card>
       <v-card-title class="black text-h5 d-flex justify-space-between">
         <div class="text-h6 white--text">{{ title }}</div>
@@ -14,11 +14,12 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <slot name="action-buttons">
-          <v-btn color="error" depressed v-on:click="onAccept">
-            <slot name="confirmLabel">
-              Accept
-            </slot>
+        <slot name="questionButtons">
+          <v-btn color="error" outlined depressed v-on:click="onCancel">
+            Cancel
+          </v-btn>
+          <v-btn color="primary" depressed v-on:click="onAccept">
+            Accept
           </v-btn>
         </slot>
       </v-card-actions>
@@ -30,23 +31,13 @@
 import Vue from 'vue';
 
 export default {
-  name: 'ModalAccept',
+  name: 'ModalQuestion',
   data: () => ({
     title: '',
     message: null,
     icon: null,
     dialog: false
   }),
-  props: {
-    fullscreen: {
-      type: Boolean,
-      default: false
-    },
-    large: {
-      type: Boolean,
-      default: false
-    }
-  },
   mounted() {
     Vue.prototype.$modalAccept = this;
   },
@@ -60,6 +51,10 @@ export default {
     onAccept() {
       this.dialog = false;
       this.$emit('onAccept');
+    },
+    onCancel() {
+      this.dialog = false;
+      this.$emit('onCancel');
     }
   }
 };

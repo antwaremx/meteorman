@@ -1,19 +1,30 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
 import Home from '../views/Home';
+import LayoutSPA from '../layouts/LayoutSPA';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '*',
-      redirect: '/'
-    }
-  ]
-})
+	routes: [
+		{
+			path: '*',
+			redirect: '/'
+		},
+		{
+			path: '/',
+			components: {
+				allPageView: LayoutSPA
+			},
+			children: [
+				{
+					path: '',
+					name: 'home',
+					components: {
+						sectionView: Home
+					}
+				}
+			]
+		}
+	]
+});

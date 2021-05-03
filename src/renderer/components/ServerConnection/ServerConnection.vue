@@ -159,24 +159,24 @@ export default {
       this.$refs.advancedOptionsRef.dialog = true;
     },
     initializeListeners() {
-      this.Meteor.on('connected', async () => {
+      this.Meteor.on('connected', async() => {
         console.info('Connected to the server');
-        if (this.authentication.userOrEmail && this.authentication.password) {
+        if (this.authentication.type !== 'none') {
           let user = {};
           if (this.authentication.type === 'username') {
             user = { username: this.authentication.userOrEmail };
           } else {
             user = { email: this.authentication.userOrEmail };
           }
-          try{
+          try {
             await this.Meteor.login({
               user,
               password: this.authentication.password
             });
-          }catch(error){
-            console.error('error authentication: ',error);
+          } catch (error) {
+            console.error('error authentication: ', error);
             this.Meteor.disconnect();
-            this.$alert.showAlertSimple('error',error.reason);
+            this.$alert.showAlertSimple('error', error.reason);
           }
         } else {
           console.warn('Connected without Authentication');
@@ -214,20 +214,33 @@ export default {
       });
 
     },
+    validateConnection() {
+      let isCorrect = true;
+      if (!this.serverConnection.protocol || !this.serverConnection.host || !this.serverConnection.port || !this.serverConnection.path) {
+        this.$alert.showAlertSimple('warning', 'Please fill all data connection (host, port, etc)');
+        isCorrect = false;
+      }
+      if (this.authentication.type !== 'none' && (!this.authentication.userOrEmail || !this.authentication.password)) {
+        this.$alert.showAlertSimple('warning', 'Please enter your credentials');
+        isCorrect = false;
+      }
+      return isCorrect;
+    },
     connect() {
-      //TODO:Validate fields
       console.log('Meteor connection: ', this.serverConnection);
-      const opts = {
-        endpoint: `${ this.serverConnection.protocol }://${ this.serverConnection.host }:${ this.serverConnection.port }/${ this.serverConnection.path }`,
-        SocketConstructor: ws,
-        reconnectInterval: this.serverConnection.reconnectInterval,
-        maxTimeout: this.serverConnection.maxTimeout,
-        autoConnect: false,
-        autoReconnect: true //TODO: Agregar al UI (va ligado con el de reconnectInterval)
-      };
-      this.Meteor = new SimpleDDP(opts, [simpleDDPLogin]);
-      this.Meteor.connect();
-      this.initializeListeners();
+      if (this.validateConnection()) {
+        const opts = {
+          endpoint: `${ this.serverConnection.protocol }://${ this.serverConnection.host }:${ this.serverConnection.port }/${ this.serverConnection.path }`,
+          SocketConstructor: ws,
+          reconnectInterval: this.serverConnection.reconnectInterval,
+          maxTimeout: this.serverConnection.maxTimeout,
+          autoConnect: false,
+          autoReconnect: true //TODO: Add to UI
+        };
+        this.Meteor = new SimpleDDP(opts, [simpleDDPLogin]);
+        this.Meteor.connect();
+        this.initializeListeners();
+      }
     },
     disconnectFromServer() {
       this.Meteor.logout();
@@ -242,6 +255,7 @@ export default {
 .auth-wrapper /deep/ .v-input__control {
   height: 40px;
 }
+
 .tree-view-item-key {
   color: red;
 }

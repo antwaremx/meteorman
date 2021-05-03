@@ -15,3 +15,12 @@
 .mid-addon {
 	border-radius: 0 !important;
 }
+
+.markdown-editor /deep/ code {
+	background-color: initial !important;
+	color: initial !important;
+	padding: initial !important;
+	border-radius: initial !important;
+	font-size: initial !important;
+	font-weight: initial !important;
+}

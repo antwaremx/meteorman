@@ -5,7 +5,8 @@
     <scripts>
       <script value="dev" />
     </scripts>
-    <node-interpreter value="project" />
+    <node-interpreter value="/usr/local/bin/node" />
+    <package-manager value="yarn" />
     <envs />
     <method v="2" />
   </configuration>
