@@ -1,7 +1,7 @@
 {
   "name": "meteorman",
   "version": "2.0.0",
-  "author": "Antware",
+  "author": "Antware <development@antware.mx>",
   "description": "A DDP client with GUI",
   "license": "MIT",
   "main": "./dist/electron/main.js",
@@ -51,7 +51,8 @@
     },
     "linux": {
       "category": "Utility",
-      "icon": "build/icons"
+      "icon": "build/icons",
+      "target": "deb"
     }
   },
   "dependencies": {
