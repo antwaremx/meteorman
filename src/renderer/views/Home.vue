@@ -47,6 +47,14 @@ export default {
   beforeMount() {
     this.initializeOpenEndpoints({ connectionName: this.connection.title });
   },
+  watch: {
+    endpointTab() {
+      const responseView = document.querySelectorAll('.ace-jsoneditor .ace_text-input')[0];
+      if (responseView) {
+        responseView.focus();
+      }
+    }
+  },
   methods: {
     ...mapMutations(['initializeOpenEndpoints', 'addOpenEndpointToConnection', 'removeOpenEndpointOfConnection']),
     updateConnection(value) {

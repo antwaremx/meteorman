@@ -14,7 +14,8 @@
           </div>
           <template v-slot:action-buttons>
             <v-btn v-if="!editingDescription" color="error" small
-                   depressed @click="editingDescription=true"> {{ !endpoint.description ? 'Add' : 'Edit' }}</v-btn>
+                   depressed @click="editingDescription=true"> {{ !endpoint.description ? 'Add' : 'Edit' }}
+            </v-btn>
             <div v-else>
               <v-btn small outlined color="error" class="mr-2" @click="cancelDescription">Cancel</v-btn>
               <v-btn small outlined color="success" @click="saveDescription">Save</v-btn>
@@ -101,7 +102,15 @@ const { mapMutations } = createNamespacedHelpers('connections');
 
 export default {
   name: 'DdpEndpoint',
-  components: {ModalAccept, SelectCollectionOrFolder, ModalQuestion, SaveEndpoint, MethodResponse, Arguments, MarkdownItVueLight },
+  components: {
+    ModalAccept,
+    SelectCollectionOrFolder,
+    ModalQuestion,
+    SaveEndpoint,
+    MethodResponse,
+    Arguments,
+    MarkdownItVueLight
+  },
   props: ['connection', 'ddpConnection', 'endpoint'],
   data() {
     return {
@@ -163,6 +172,8 @@ export default {
       }
     },
     async subscribeToPublication(args) {
+      const initialTime = performance.now();
+      let elapsedTime = 0;
       try {
         if (this.isSubscriptionInProgress) {
           if (await this.isSubscriptionInProgress.isOn()) {
@@ -171,19 +182,14 @@ export default {
           }
         }
         this.isSubscriptionInProgress = this.connection.Meteor.subscribe(this.publication.name, ...args);
-        const initialTime = performance.now();
         await this.isSubscriptionInProgress.start();
         await this.isSubscriptionInProgress.ready();
-        const elapsedTime = performance.now() - initialTime;
-        const firstResponse = this.connection.Meteor.collection(this.publication.collectionName).filter(e => e).fetch();
-        this.$refs.methodResponseRef.loadResponse(firstResponse, elapsedTime);
-        this.connection.Meteor.collection(this.publication.collectionName).filter(e => e)
-            .onChange(({ next }) => {
-              this.$refs.methodResponseRef.loadResponse(next);
-            });
+        elapsedTime = performance.now() - initialTime;
+        const firstResponse = this.connection.Meteor.collection(this.publication.collectionName).reactive();
+        this.$refs.methodResponseRef.loadResponse(firstResponse.data(), elapsedTime);
       } catch (exception) {
         console.error('subscription error: ', exception);
-        this.$refs.methodResponseRef.loadResponse(exception);
+        this.$refs.methodResponseRef.loadResponse(exception, elapsedTime);
       }
     },
     loadArguments(args) {
