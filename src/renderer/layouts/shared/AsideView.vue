@@ -53,12 +53,29 @@ export default {
   }),
   methods: {
     ...mapMutations(['openEndpointFromCollection']),
+    searchTree(element, elementId) {
+      if (element.id === elementId) {
+        return element;
+      } else if (element.children != null) {
+        let result = null;
+        for (let i = 0; result == null && i < element.children.length; i++) {
+          result = this.searchTree(element.children[i], elementId);
+        }
+        return result;
+      }
+      return null;
+    },
     activeItem(item) {
       const itemSelected = item[0];
       if (itemSelected && itemSelected.type === 'endpoint') {
+        let endpointTemp = null;
+        for (const collection of this.connection.collections) {
+          endpointTemp = this.searchTree(collection, itemSelected.id);
+          if (endpointTemp) break;
+        }
         this.openEndpointFromCollection({
           connectionName: this.connection.title,
-          endpoint: itemSelected
+          endpoint: endpointTemp
         });
         this.$root.$emit('updateSelectedTab', { ...itemSelected });
       }
@@ -77,6 +94,7 @@ export default {
 .v-treeview-node__prepend {
   min-width: auto;
 }
+
 .v-application--is-ltr .v-treeview-node__prepend {
   margin-right: 0;
 }
