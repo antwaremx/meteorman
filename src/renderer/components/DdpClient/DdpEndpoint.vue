@@ -252,10 +252,8 @@ export default {
     },
     openSaveEndpoint() {
       this.$refs.saveEndpointRef.title = 'Save endpoint';
+      this.$refs.folderSelectedRef.initializeCurrentLocation(this.endpoint.id);
       this.$refs.saveEndpointRef.dialog = true;
-      setTimeout(() => {
-        this.$refs.folderSelectedRef.initializeCurrentLocation(this.endpoint.id);
-      }, 100);
     },
     validateEndpointToBeSaved() {
       let isValid = true;
@@ -271,7 +269,6 @@ export default {
     },
     saveEndpoint() {
       if (this.validateEndpointToBeSaved()) {//TODO: Implement vee-validate
-        this.saveDescription();
         this.saveOpenEndpointInCollection({
           connectionName: this.ddpConnection.title,
           openEndpoint: this.endpoint,

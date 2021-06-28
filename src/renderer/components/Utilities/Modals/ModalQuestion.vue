@@ -1,5 +1,5 @@
 <template>
-  <v-dialog id="modalQuestion" max-width="500px" v-model="dialog">
+  <v-dialog id="modalQuestion" max-width="500px" v-model="dialog" eager>
     <v-card>
       <v-card-title class="black text-h5 d-flex justify-space-between">
         <div class="text-h6 white--text">{{ title }}</div>
