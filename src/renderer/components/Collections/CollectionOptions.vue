@@ -37,6 +37,8 @@
       <vue-simplemde v-model="endpoint.description" :configs="{placeholder:'Endpoint description (Optional)'}"
                      class="markdown-editor"/>
     </modal-question>
+
+    <a id="downloadCollection" style="display:none"></a>
   </div>
 </template>
 
@@ -144,10 +146,11 @@ export default {
     },
     exportCollection() {
       console.log('Export collection');
-      let link = document.createElement('a');
-      link.href = 'data:application/json;charset=UTF-8,' + escape(JSON.stringify(this.element));
-      link.download = this.element.name + '.json';
-      link.click();
+      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(this.element));
+      const downloadElement = document.getElementById('downloadCollection');
+      downloadElement.setAttribute('href', dataStr);
+      downloadElement.setAttribute('download', this.element.name + '.json');
+      downloadElement.click();
     },
     removeCollection() {
       if (this.$parent.level === 0) {
