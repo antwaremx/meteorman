@@ -52,7 +52,7 @@
     "linux": {
       "category": "Utility",
       "icon": "build/icons",
-      "target": "deb"
+      "target": ["deb", "pacman"]
     }
   },
   "dependencies": {
