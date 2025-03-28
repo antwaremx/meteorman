@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "./dist/electron/main.js",
   "scripts": {
-    "build": "node .electron-vue/build.js && electron-builder -l",
+    "build": "node .electron-vue/build.js && electron-builder -wml",
     "build-mac": "node .electron-vue/build.js && electron-builder -m",
     "build-win": "node .electron-vue/build.js && electron-builder -w",
     "build-linux": "node .electron-vue/build.js && electron-builder -l",
