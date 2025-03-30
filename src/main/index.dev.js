@@ -15,8 +15,11 @@ app.whenReady().then(() => {
     require('devtron').install()
 
     const installExtension = require('electron-devtools-installer')
-    installExtension.default(installExtension.VUEJS_DEVTOOLS)
-        .then(() => {})
+    installExtension.default(installExtension.VUEJS_DEVTOOLS, {
+        loadExtensionOptions: { allowFileAccess: true },
+        forceDownload: false
+    })
+        .then(name => console.log(`Added Extension: ${name}`))
         .catch(err => {
             console.log('Unable to install `vue-devtools`: \n', err)
         })
