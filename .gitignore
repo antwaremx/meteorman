@@ -5,6 +5,8 @@ build/*
 !build/icons
 coverage
 node_modules/
+.vite/
+out/
 npm-debug.log
 npm-debug.log.*
 thumbs.db
