@@ -45,7 +45,8 @@ Meteorman is The Postman of Meteor. It is a DDP Client with GUI
 
 ### System Requirements 📋
 
-- NodeJs [Download here](https://nodejs.org/es/) 
+- A current Node.js LTS release
+- npm
 
 ### Installation 🔧
 
@@ -60,15 +61,41 @@ $ git clone https://github.com/antwaremx/meteorman
 # install dependencies
 $ npm install
 
-# serve with hot reload at localhost:9080
-$ npm run dev
+# start Electron Forge with Vite hot reload
+$ npm start
 
-# build electron application for production
+# type-check the Electron and Vue application
+$ npm run typecheck
+
+# package the application for the current platform
 $ npm run build
 
-# run unit & end-to-end tests
-$ npm run test
+# create an installer/archive for the current platform
+$ npm run make
+
+# target a configured Electron Forge maker explicitly
+$ npm run make:mac
+$ npm run make:windows
+$ npm run make:linux
 ```
+
+Forge writes distributable output to `out/make`. Native tooling and maker
+requirements still apply: use the matching operating system or a configured CI
+runner for production artifacts. In particular, the Windows and Linux commands
+are exposed for consistent workflows but are not guaranteed to cross-build
+complete release artifacts from macOS.
+
+### Application stack
+
+- Electron and Electron Forge
+- Vue 3 with TypeScript
+- Vite
+- Vuetify
+- Pinia
+- Monaco Editor
+
+The renderer runs without Node.js integration. Native collection import/export is
+exposed through a small context-isolated preload API.
 
 ---
 
