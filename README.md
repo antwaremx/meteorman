@@ -32,13 +32,19 @@ Meteorman is The Postman of Meteor. It is a DDP Client with GUI
 - Linux 🐧 ✅
 - Windows ✅
 
-### Downloads 💾 
+### Downloads & Installation 💾
 
-| Platform | Arch    | Version | Link                                                                                                              |
-| ---------- | --------------- | ------- | ------------------------------------------------------------------------------------------------------- |
-| Windows    | x64             | 2.0.1   | [Download](https://github.com/antwaremx/meteorman/releases/download/2.0.1/Meteorman-2.0.1.exe)   |
-| Mac        | x64             | 2.0.1   | [Download](https://github.com/antwaremx/meteorman/releases/download/2.0.1/Meteorman-2.0.1.dmg)         |
-| Linux      | x64             | 2.0.1   | [Download](https://github.com/antwaremx/meteorman/releases/download/2.0.1/Meteorman-2.0.1.deb)    |
+Download Meteorman 3.0.0 for your platform:
+
+| Platform | Arch | Package | Link |
+| --- | --- | --- | --- |
+| macOS (Apple Silicon) | arm64 | ZIP | [Download](https://github.com/antwaremx/meteorman/releases/download/v3.0.0/Meteorman-darwin-arm64-3.0.0.zip) |
+| Windows | x64 | Setup EXE | [Download](https://github.com/antwaremx/meteorman/releases/download/v3.0.0/Meteorman-3.0.0.Setup.exe) |
+| Linux (Debian/Ubuntu) | amd64 | DEB | [Download](https://github.com/antwaremx/meteorman/releases/download/v3.0.0/meteorman_3.0.0_amd64.deb) |
+| Linux (RPM) | x86_64 | RPM | [Download](https://github.com/antwaremx/meteorman/releases/download/v3.0.0/meteorman-3.0.0-1.x86_64.rpm) |
+
+Extract the macOS ZIP and open Meteorman, run the Windows installer, or install
+the Linux package with your distribution's package manager.
 
 
 ## For Developers 🚀
